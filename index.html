@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marvel Champions Tracker</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="site.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="site.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  </head>
+  <body class="bg-light">
+    <div class="container py-3" x-data="mct" x-cloak>
+      <!-- Before Init -->
+      <div class="row" x-show="state.heroes.length === 0">
+        <div class="col-12">
+          <h5 class="mb-2">Marvel Champions Tracker</h5>
+          <div class="mb-3">With this app, you can play without physical tokens and dials.</div>
+          <h6 class="mb-3">First off, how many players?</h6>
+        </div>
+        <div class="col-3">
+          <div class="d-grid">
+            <button class="btn btn-secondary" type="button" @click="initHeroes(1)">1</button>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="d-grid">
+            <button class="btn btn-secondary" type="button" @click="initHeroes(2)">2</button>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="d-grid">
+            <button class="btn btn-secondary" type="button" @click="initHeroes(3)">3</button>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="d-grid">
+            <button class="btn btn-secondary" type="button" @click="initHeroes(4)">4</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- After Init -->
+      <div class="row" x-show="state.heroes.length > 0">
+        <!-- Enemy -->
+        <div class="col-12">
+          <div class="card mb-3 text-bg-danger">
+            <div class="card-body" @click="edit(state.enemy, null, null)">
+              <h6 class="card-title">Enemy</h6>
+              <span class="badge text-bg-light">&#10084;&#65039;<span x-text="state.enemy.health"></span></span>
+              <span class="badge text-bg-light" x-show="state.enemy.tough">T</span>
+              <span class="badge text-bg-light" x-show="state.enemy.stunned">S</span>
+              <span class="badge text-bg-light" x-show="state.enemy.confused">C</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schemes -->
+        <div class="col-12">
+          <div class="card mb-3 text-bg-warning">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item text-bg-warning" @click="edit(state.mainScheme, null, null)">
+                <h6 class="card-title">Main Scheme</h6>
+                <span class="badge text-bg-light">&#9888;<span x-text="state.mainScheme.threat"></span></span>
+                <span class="badge text-bg-light" x-show="state.mainScheme.acceleration > 0">
+                  &#9195;<span x-text="state.mainScheme.acceleration"></span>
+                </span>
+              </li>
+              <li class="list-group-item text-bg-warning fs-7 fw-semibold" @click="addSideScheme()">Side Schemes +</li>
+              <template x-for="(scheme, schemeIndex) in state.sideSchemes">
+                <li class="list-group-item text-bg-warning" @click="edit(scheme, state.sideSchemes, schemeIndex)">
+                  <span class="badge text-bg-light">&#9888;<span x-text="scheme.threat"></span></span>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Heroes -->
+        <template x-for="(hero, heroIndex) in state.heroes">
+          <div class="col">
+            <div class="card mb-3 text-bg-secondary">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item text-bg-primary" @click="edit(hero, state.heroes, heroIndex)">
+                  <h6 class="card-title">Hero <span x-text="heroIndex + 1"></span></h6>
+                  <span class="badge text-bg-light">&#10084;&#65039;<span x-text="hero.health"></span></span>
+                  <span class="badge text-bg-light" x-show="hero.tough">T</span>
+                  <span class="badge text-bg-light" x-show="hero.stunned">S</span>
+                  <span class="badge text-bg-light" x-show="hero.confused">C</span>
+                </li>
+                <li class="list-group-item text-bg-danger fs-7 fw-semibold" @click="addMinion(hero)">Minions +</li>
+                <template x-for="(minion, minionIndex) in hero.minions">
+                  <li class="list-group-item text-bg-danger" @click="edit(minion, hero.minions, minionIndex)">
+                    <span class="badge text-bg-light">&#128165;<span x-text="minion.damage"></span></span>
+                    <span class="badge text-bg-light" x-show="minion.counter > 0">
+                      &#9201;&#65039;<span x-text="minion.counter"></span>
+                    </span>
+                    <span class="badge text-bg-light" x-show="minion.tough">T</span>
+                    <span class="badge text-bg-light" x-show="minion.stunned">S</span>
+                    <span class="badge text-bg-light" x-show="minion.confused">C</span>
+                  </li>
+                </template>
+                <li class="list-group-item text-bg-info fs-7 fw-semibold" @click="addAlly(hero)">Allies +</li>
+                <template x-for="(ally, allyIndex) in hero.allies">
+                  <li class="list-group-item text-bg-info" @click="edit(ally, hero.allies, allyIndex)">
+                    <span class="badge text-bg-light">&#128165;<span x-text="ally.damage"></span></span>
+                    <span class="badge text-bg-light" x-show="ally.counter > 0">
+                      &#9201;&#65039;<span x-text="ally.counter"></span>
+                    </span>
+                    <span class="badge text-bg-light" x-show="ally.tough">T</span>
+                    <span class="badge text-bg-light" x-show="ally.stunned">S</span>
+                    <span class="badge text-bg-light" x-show="ally.confused">C</span>
+                  </li>
+                </template>
+                <li class="list-group-item text-bg-secondary fs-7 fw-semibold" @click="addCard(hero)">Cards +</li>
+                <template x-for="(card, cardIndex) in hero.cards">
+                  <li class="list-group-item text-bg-secondary" @click="edit(card, hero.cards, cardIndex)">
+                    <span class="badge text-bg-light">&#9201;&#65039;<span x-text="card.counter"></span></span>
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </div>
+        </template>
+
+        <!-- Buttons -->
+        <div class="col-12">
+          <div class="d-grid">
+            <button class="btn btn-sm btn-danger" type="button" @click="reset()">Reset</button>
+          </div>
+        </div>
+
+        <!-- Edit modal -->
+        <div id="editModal" class="modal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h6 class="modal-title">Edit Item</h6>
+              </div>
+              <div class="modal-body">
+                <template x-for="prop in ['health', 'damage', 'threat', 'acceleration', 'counter']">
+                  <template x-if="prop in edited">
+                    <div class="row mb-3">
+                      <label
+                        :for="'input' + prop"
+                        class="col-sm-3 col-form-label text-capitalize"
+                        x-text="prop"
+                      ></label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <button class="btn btn-outline-secondary" type="button" @click="editDecrease(prop)">-</button>
+                          <input
+                            :id="'input' + prop"
+                            class="form-control text-center"
+                            type="number"
+                            x-model="edited[prop]"
+                          />
+                          <button class="btn btn-outline-secondary" type="button" @click="editIncrease(prop)">+</button>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </template>
+                <template x-if="'tough' in edited">
+                  <fieldset class="row mb-3">
+                    <legend class="col-form-label col-sm-3 pt-0">Status</legend>
+                    <div class="col-sm-9">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkTough" x-model="edited.tough" />
+                        <label class="form-check-label" for="checkTough">Tough</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkStunned" x-model="edited.stunned" />
+                        <label class="form-check-label" for="checkStunned">Stunned</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkConfused" x-model="edited.confused" />
+                        <label class="form-check-label" for="checkConfused">Confused</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </template>
+                <div class="d-grid">
+                  <button class="btn btn-sm btn-danger mb-2" x-show="editedList !== null" @click="editDelete()">
+                    Delete
+                  </button>
+                  <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

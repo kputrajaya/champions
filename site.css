@@ -1,0 +1,19 @@
+[x-cloak] {
+  display: none;
+}
+
+[\@click] {
+  cursor: pointer;
+}
+
+.fs-7 {
+  font-size: 0.75rem;
+}
+
+.container {
+  max-width: 1024px;
+}
+
+.modal-header {
+  padding: 0.5rem 1rem;
+}
