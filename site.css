@@ -17,3 +17,9 @@
 .modal-header {
   padding: 0.5rem 1rem;
 }
+
+.card {
+  border: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
