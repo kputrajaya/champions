@@ -99,7 +99,8 @@ document.addEventListener('alpine:init', () => {
         editModalRef.hide();
       },
       reset() {
-        if (prompt('Reset game? Type "reset" to continue.') !== 'reset') return;
+        const response = prompt('Reset game? Type "yes" to continue.') || '';
+        if (response.toLowerCase() !== 'yes') return;
         this.state = deepCopy(BASE.state);
       },
     };

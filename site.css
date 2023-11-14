@@ -7,19 +7,18 @@
 }
 
 .fs-7 {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
 }
 
 .container {
   max-width: 1024px;
 }
 
-.modal-header {
-  padding: 0.5rem 1rem;
-}
-
 .card {
   border: 0;
-  box-shadow: none;
   overflow: hidden;
+}
+
+.modal-header {
+  padding: 0.5rem 1rem;
 }
