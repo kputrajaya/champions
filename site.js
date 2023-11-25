@@ -28,6 +28,7 @@ document.addEventListener('alpine:init', () => {
       minions: [],
       allies: [],
       cards: [],
+      counter: 0,
     },
     state: {
       enemy: {

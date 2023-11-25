@@ -90,6 +90,9 @@
                   <span class="badge text-bg-light fs-7 fw-semibold">
                     &#10084;&#65039; <span x-text="hero.health"></span>
                   </span>
+                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.counter > 0">
+                    &#9201;&#65039; <span x-text="hero.counter"></span>
+                  </span>
                   <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.tough">T</span>
                   <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.stunned">S</span>
                   <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.confused">C</span>
