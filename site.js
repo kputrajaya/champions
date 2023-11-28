@@ -31,7 +31,7 @@ document.addEventListener('alpine:init', () => {
       counter: 0,
     },
     state: {
-      enemy: {
+      villain: {
         health: 0,
         tough: false,
         stunned: false,
@@ -100,8 +100,8 @@ document.addEventListener('alpine:init', () => {
         editModalRef.hide();
       },
       reset() {
-        const response = prompt('Reset game? Type "yes" to continue.') || '';
-        if (response.toLowerCase() !== 'yes') return;
+        const response = prompt('Reset game? Type "y" to continue.') || '';
+        if (response.toLowerCase() !== 'y') return;
         this.state = deepCopy(BASE.state);
       },
     };

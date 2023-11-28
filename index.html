@@ -46,18 +46,18 @@
 
       <!-- After Init -->
       <div class="row gx-1" x-show="state.heroes.length > 0">
-        <!-- Enemy -->
+        <!-- Villain -->
         <div class="col-12">
           <div class="card mb-1">
             <ul class="list-group list-group-flush">
-              <li class="list-group-item text-bg-danger" @click="edit(state.enemy, null, null)">
-                <h6 class="card-title fs-7">Enemy</h6>
+              <li class="list-group-item text-bg-danger" @click="edit(state.villain, null, null)">
+                <h6 class="card-title fs-7">Villain</h6>
                 <span class="badge text-bg-light fs-7 fw-semibold">
-                  &#10084;&#65039; <span x-text="state.enemy.health"></span>
+                  &#10084;&#65039; <span x-text="state.villain.health"></span>
                 </span>
-                <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.enemy.tough">T</span>
-                <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.enemy.stunned">S</span>
-                <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.enemy.confused">C</span>
+                <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.tough">T</span>
+                <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.stunned">S</span>
+                <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.confused">C</span>
               </li>
               <li class="list-group-item text-bg-warning" @click="edit(state.mainScheme, null, null)">
                 <h6 class="card-title fs-7">Main Scheme</h6>
