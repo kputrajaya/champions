@@ -11,7 +11,7 @@
 }
 
 .container {
-  max-width: 1024px;
+  max-width: 992px;
 }
 
 .card {
@@ -21,4 +21,15 @@
 
 .modal-header {
   padding: 0.5rem 1rem;
+}
+
+@media (min-width: 576px) {
+  html {
+    font-size: 18px;
+  }
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 20px;
+  }
 }
