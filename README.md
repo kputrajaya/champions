@@ -1,6 +1,6 @@
 # Champions
 
-Play Marvel Champions with this and leave your tokens and dials at home.
+Play Marvel Champions without physical tokens.
 
 ## Built With
 
