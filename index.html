@@ -51,8 +51,7 @@
           <div class="card mb-1">
             <ul class="list-group list-group-flush">
               <li class="list-group-item text-bg-danger" @click="edit(state.villain, null, null)">
-                <h6 class="card-title fs-7">Villain</h6>
-                <span class="badge text-bg-light fs-7 fw-semibold">
+                <span class="badge text-bg-light fs-6 fw-semibold">
                   &#10084;&#65039; <span x-text="state.villain.health"></span>
                 </span>
                 <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.tough">T</span>
@@ -60,8 +59,7 @@
                 <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.confused">C</span>
               </li>
               <li class="list-group-item text-bg-warning" @click="edit(state.mainScheme, null, null)">
-                <h6 class="card-title fs-7">Main Scheme</h6>
-                <span class="badge text-bg-light fs-7 fw-semibold">
+                <span class="badge text-bg-light fs-6 fw-semibold">
                   &#9888;&#65039; <span x-text="state.mainScheme.threat"></span>
                 </span>
                 <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.mainScheme.acceleration > 0">
@@ -86,8 +84,7 @@
             <div class="card mb-1">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item text-bg-primary" @click="edit(hero, state.heroes, heroIndex)">
-                  <h6 class="card-title fs-7">Hero <span x-text="heroIndex + 1"></span></h6>
-                  <span class="badge text-bg-light fs-7 fw-semibold">
+                  <span class="badge text-bg-light fs-6 fw-semibold">
                     &#10084;&#65039; <span x-text="hero.health"></span>
                   </span>
                   <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.counter > 0">
@@ -141,7 +138,7 @@
         <!-- Buttons -->
         <div class="col-12">
           <div class="d-grid mt-1">
-            <button class="btn btn-sm btn-danger" type="button" @click="reset()">Reset</button>
+            <button class="btn btn-sm btn-danger fs-7" type="button" @click="reset()">Reset</button>
           </div>
         </div>
 
