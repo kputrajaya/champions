@@ -9,6 +9,9 @@
   font-size: 0.8rem;
 }
 
+.btn {
+  border: 0;
+}
 .container {
   max-width: 992px;
 }
@@ -21,6 +24,10 @@
 }
 .modal-header {
   padding: 0.5rem 1rem;
+}
+
+.badge.first-player {
+  box-shadow: inset 0 0 0 2px #ffc107, 0 0 0 2px #dc3545;
 }
 
 @media (min-width: 576px) {

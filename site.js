@@ -21,7 +21,7 @@ document.addEventListener('alpine:init', () => {
       counter: 0,
     },
     hero: {
-      health: 0,
+      health: 10,
       tough: false,
       stunned: false,
       confused: false,
@@ -43,6 +43,7 @@ document.addEventListener('alpine:init', () => {
       },
       sideSchemes: [],
       heroes: [],
+      firstPlayer: 0,
     },
   };
 
@@ -61,11 +62,17 @@ document.addEventListener('alpine:init', () => {
       editedList: null,
       editedIndex: null,
 
+      // Computed
+      isSolo() {
+        return this.state.heroes.length === 1;
+      },
+
       // Method
       initHeroes(heroCount) {
         for (let i = 0; i < heroCount; i++) {
           this.state.heroes.push(deepCopy(BASE.hero));
         }
+        this.state.firstPlayer = Math.floor(Math.random() * heroCount);
       },
       addSideScheme() {
         this.state.sideSchemes.push(deepCopy(BASE.sideScheme));
@@ -98,6 +105,9 @@ document.addEventListener('alpine:init', () => {
         if (!confirm('Delete this item?')) return;
         this.editedList.splice(this.editedIndex, 1);
         editModalRef.hide();
+      },
+      rotate() {
+        this.state.firstPlayer = (this.state.firstPlayer + 1) % this.state.heroes.length;
       },
       reset() {
         const response = prompt('Reset game? Type "y" to continue.') || '';

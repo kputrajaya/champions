@@ -16,129 +16,129 @@
   <body class="bg-light">
     <div class="container p-2" x-data="mct" x-cloak>
       <!-- Before Init -->
-      <div class="row" x-show="state.heroes.length === 0">
-        <div class="col-12">
-          <h1 class="mb-2 fs-5">Marvel Champions Tracker</h1>
-          <div class="mb-4 text-secondary">With this app, you can play without physical tokens and dials.</div>
-          <div class="mb-2 fw-semibold">First off, how many heroes?</div>
+      <div x-show="state.heroes.length === 0">
+        <h1 class="mb-2 fs-5 fw-bold">Champions</h1>
+        <div class="mb-3 text-secondary">Play Marvel Champions without physical tokens.</div>
+        <div class="mb-2 fw-semibold">First off, how many heroes?</div>
+        <div class="d-grid mb-2">
+          <button class="btn btn-primary" type="button" @click="initHeroes(1)">1</button>
         </div>
-        <div class="col-3">
-          <div class="d-grid">
-            <button class="btn btn-primary" type="button" @click="initHeroes(1)">1</button>
-          </div>
+        <div class="d-grid mb-2">
+          <button class="btn btn-primary" type="button" @click="initHeroes(2)">2</button>
         </div>
-        <div class="col-3">
-          <div class="d-grid">
-            <button class="btn btn-primary" type="button" @click="initHeroes(2)">2</button>
-          </div>
+        <div class="d-grid mb-2">
+          <button class="btn btn-primary" type="button" @click="initHeroes(3)">3</button>
         </div>
-        <div class="col-3">
-          <div class="d-grid">
-            <button class="btn btn-primary" type="button" @click="initHeroes(3)">3</button>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="d-grid">
-            <button class="btn btn-primary" type="button" @click="initHeroes(4)">4</button>
-          </div>
+        <div class="d-grid">
+          <button class="btn btn-primary" type="button" @click="initHeroes(4)">4</button>
         </div>
       </div>
 
       <!-- After Init -->
-      <div class="row gx-1" x-show="state.heroes.length > 0">
-        <!-- Villain -->
-        <div class="col-12">
-          <div class="card mb-1">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item text-bg-danger" @click="edit(state.villain, null, null)">
-                <span class="badge text-bg-light fs-6 fw-semibold">
-                  &#10084;&#65039; <span x-text="state.villain.health"></span>
-                </span>
-                <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.tough">T</span>
-                <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.stunned">S</span>
-                <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.confused">C</span>
-              </li>
-              <li class="list-group-item text-bg-warning" @click="edit(state.mainScheme, null, null)">
-                <span class="badge text-bg-light fs-6 fw-semibold">
-                  &#9888;&#65039; <span x-text="state.mainScheme.threat"></span>
-                </span>
-                <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.mainScheme.acceleration > 0">
-                  &#9195; <span x-text="state.mainScheme.acceleration"></span>
-                </span>
-              </li>
-              <li class="list-group-item text-bg-warning fs-7" @click="addSideScheme()">Side Schemes +</li>
-              <template x-for="(scheme, schemeIndex) in state.sideSchemes">
-                <li class="list-group-item text-bg-warning" @click="edit(scheme, state.sideSchemes, schemeIndex)">
-                  <span class="badge text-bg-light fs-7 fw-semibold">
-                    &#9888;&#65039; <span x-text="scheme.threat"></span>
-                  </span>
-                </li>
-              </template>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Heroes -->
-        <template x-for="(hero, heroIndex) in state.heroes">
-          <div class="col-6">
-            <div class="card mb-1">
+      <div x-show="state.heroes.length > 0">
+        <div class="row gx-1 mb-1">
+          <!-- Villain -->
+          <div class="col-12">
+            <div class="card mb-2">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item text-bg-primary" @click="edit(hero, state.heroes, heroIndex)">
+                <li class="list-group-item text-bg-danger" @click="edit(state.villain, null, null)">
                   <span class="badge text-bg-light fs-6 fw-semibold">
-                    &#10084;&#65039; <span x-text="hero.health"></span>
+                    &#10084;&#65039; <span x-text="state.villain.health"></span>
                   </span>
-                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.counter > 0">
-                    &#9201;&#65039; <span x-text="hero.counter"></span>
-                  </span>
-                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.tough">T</span>
-                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.stunned">S</span>
-                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.confused">C</span>
+                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.tough">T</span>
+                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.stunned">S</span>
+                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.confused">C</span>
                 </li>
-                <li class="list-group-item text-bg-danger fs-7" @click="addMinion(hero)">Minions +</li>
-                <template x-for="(minion, minionIndex) in hero.minions">
-                  <li class="list-group-item text-bg-danger" @click="edit(minion, hero.minions, minionIndex)">
+                <li class="list-group-item text-bg-warning" @click="edit(state.mainScheme, null, null)">
+                  <span class="badge text-bg-light fs-6 fw-semibold">
+                    &#9888;&#65039; <span x-text="state.mainScheme.threat"></span>
+                  </span>
+                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.mainScheme.acceleration > 0">
+                    &#9195; <span x-text="state.mainScheme.acceleration"></span>
+                  </span>
+                </li>
+                <li class="list-group-item text-bg-warning fs-7" @click="addSideScheme()">Side Schemes +</li>
+                <template x-for="(scheme, schemeIndex) in state.sideSchemes">
+                  <li class="list-group-item text-bg-warning" @click="edit(scheme, state.sideSchemes, schemeIndex)">
                     <span class="badge text-bg-light fs-7 fw-semibold">
-                      &#128165; <span x-text="minion.damage"></span>
-                    </span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.counter > 0">
-                      &#9201;&#65039; <span x-text="minion.counter"></span>
-                    </span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.tough">T</span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.stunned">S</span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.confused">C</span>
-                  </li>
-                </template>
-                <li class="list-group-item text-bg-info fs-7" @click="addAlly(hero)">Allies +</li>
-                <template x-for="(ally, allyIndex) in hero.allies">
-                  <li class="list-group-item text-bg-info" @click="edit(ally, hero.allies, allyIndex)">
-                    <span class="badge text-bg-light fs-7 fw-semibold">
-                      &#128165; <span x-text="ally.damage"></span>
-                    </span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.counter > 0">
-                      &#9201;&#65039; <span x-text="ally.counter"></span>
-                    </span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.tough">T</span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.stunned">S</span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.confused">C</span>
-                  </li>
-                </template>
-                <li class="list-group-item text-bg-secondary fs-7" @click="addCard(hero)">Cards +</li>
-                <template x-for="(card, cardIndex) in hero.cards">
-                  <li class="list-group-item text-bg-secondary" @click="edit(card, hero.cards, cardIndex)">
-                    <span class="badge text-bg-light fs-7 fw-semibold">
-                      &#9201;&#65039; <span x-text="card.counter"></span>
+                      &#9888;&#65039; <span x-text="scheme.threat"></span>
                     </span>
                   </li>
                 </template>
               </ul>
             </div>
           </div>
-        </template>
+
+          <!-- Heroes -->
+          <template x-for="(hero, heroIndex) in state.heroes">
+            <div :class="{'col-12': isSolo(), 'col-6': !isSolo(), 'order-1': heroIndex === 2}">
+              <div class="card mb-1">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item text-bg-primary" @click="edit(hero, state.heroes, heroIndex)">
+                    <span
+                      class="badge text-bg-light fs-6 fw-semibold"
+                      :class="!isSolo() && heroIndex === state.firstPlayer ? 'first-player' : ''"
+                    >
+                      &#10084;&#65039; <span x-text="hero.health"></span>
+                    </span>
+                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.counter > 0">
+                      &#9201;&#65039; <span x-text="hero.counter"></span>
+                    </span>
+                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.tough">T</span>
+                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.stunned">S</span>
+                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.confused">C</span>
+                  </li>
+                  <li class="list-group-item text-bg-danger fs-7" @click="addMinion(hero)">Minions +</li>
+                  <template x-for="(minion, minionIndex) in hero.minions">
+                    <li class="list-group-item text-bg-danger" @click="edit(minion, hero.minions, minionIndex)">
+                      <span class="badge text-bg-light fs-7 fw-semibold">
+                        &#128165; <span x-text="minion.damage"></span>
+                      </span>
+                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.counter > 0">
+                        &#9201;&#65039; <span x-text="minion.counter"></span>
+                      </span>
+                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.tough">T</span>
+                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.stunned">S</span>
+                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.confused">C</span>
+                    </li>
+                  </template>
+                  <li class="list-group-item text-bg-info fs-7" @click="addAlly(hero)">Allies +</li>
+                  <template x-for="(ally, allyIndex) in hero.allies">
+                    <li class="list-group-item text-bg-info" @click="edit(ally, hero.allies, allyIndex)">
+                      <span class="badge text-bg-light fs-7 fw-semibold">
+                        &#128165; <span x-text="ally.damage"></span>
+                      </span>
+                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.counter > 0">
+                        &#9201;&#65039; <span x-text="ally.counter"></span>
+                      </span>
+                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.tough">T</span>
+                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.stunned">S</span>
+                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.confused">C</span>
+                    </li>
+                  </template>
+                  <li class="list-group-item text-bg-secondary fs-7" @click="addCard(hero)">Cards +</li>
+                  <template x-for="(card, cardIndex) in hero.cards">
+                    <li class="list-group-item text-bg-secondary" @click="edit(card, hero.cards, cardIndex)">
+                      <span class="badge text-bg-light fs-7 fw-semibold">
+                        &#9201;&#65039; <span x-text="card.counter"></span>
+                      </span>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </div>
+          </template>
+        </div>
 
         <!-- Buttons -->
-        <div class="col-12">
-          <div class="d-grid mt-1">
-            <button class="btn btn-sm btn-danger fs-7" type="button" @click="reset()">Reset</button>
+        <div x-show="!isSolo()">
+          <div class="d-grid mb-2">
+            <button class="btn btn-secondary fs-7" type="button" @click="rotate()">Rotate P1</button>
+          </div>
+        </div>
+        <div>
+          <div class="d-grid">
+            <button class="btn btn-danger fs-7" type="button" @click="reset()">Reset</button>
           </div>
         </div>
 
@@ -193,10 +193,8 @@
                   </fieldset>
                 </template>
                 <div class="d-grid">
-                  <button class="btn btn-sm btn-danger mb-2" x-show="editedList !== null" @click="editDelete()">
-                    Delete
-                  </button>
-                  <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button class="btn btn-danger mb-2" x-show="editedList !== null" @click="editDelete()">Delete</button>
+                  <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
