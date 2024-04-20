@@ -111,7 +111,7 @@ document.addEventListener('alpine:init', () => {
       },
       reset() {
         const response = prompt('Reset game? Type "y" to continue.') || '';
-        if (response.toLowerCase() !== 'y') return;
+        if (response.trim().toLowerCase() !== 'y') return;
         this.state = deepCopy(BASE.state);
       },
     };
