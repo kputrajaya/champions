@@ -27,7 +27,7 @@
 }
 
 .badge.first-player {
-  box-shadow: inset 0 0 0 2px #ffc107, 0 0 0 2px #dc3545;
+  box-shadow: inset 0 0 0 3px #dc3545, 0 0 0 3px #0dcaf0;
 }
 
 @media (min-width: 576px) {

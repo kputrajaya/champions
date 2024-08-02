@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>Marvel Champions Tracker</title>
 
     <link rel="icon" href="favicon-16.png" sizes="16x16" />
@@ -137,7 +137,7 @@
         <!-- Buttons -->
         <div x-show="!isSolo()">
           <div class="d-grid mb-2">
-            <button class="btn btn-secondary fs-7" type="button" @click="rotate()">Rotate P1</button>
+            <button class="btn btn-secondary fs-7" type="button" @click="cycle()">Cycle P1</button>
           </div>
         </div>
         <div>
@@ -153,7 +153,7 @@
               <div class="modal-header">
                 <h6 class="modal-title">Edit Item</h6>
               </div>
-              <div class="modal-body">
+              <div class="modal-body pb-0">
                 <template x-for="prop in ['health', 'damage', 'threat', 'acceleration', 'counter']">
                   <template x-if="prop in edited">
                     <div class="row mb-3">
@@ -168,8 +168,9 @@
                           <input
                             :id="'input' + prop"
                             class="form-control text-center"
-                            type="number"
-                            x-model="edited[prop]"
+                            type="phone"
+                            x-model.number="edited[prop]"
+                            @blur="editBlur(prop)"
                           />
                           <button class="btn btn-secondary px-3" type="button" @click="editIncrease(prop)">+</button>
                         </div>
@@ -197,8 +198,7 @@
                   </fieldset>
                 </template>
                 <div class="d-grid">
-                  <button class="btn btn-danger mb-2" x-show="editedList !== null" @click="editDelete()">Delete</button>
-                  <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button class="btn btn-danger mb-3" x-show="editedList !== null" @click="editDelete()">Delete</button>
                 </div>
               </div>
             </div>

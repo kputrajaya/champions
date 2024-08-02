@@ -94,11 +94,20 @@ document.addEventListener('alpine:init', () => {
       },
       editDecrease(prop) {
         if (!(prop in this.edited)) return;
-        this.edited[prop] = Math.max(0, this.edited[prop] - 1);
+        if (this.edited[prop] > 0) {
+          this.edited[prop]--;
+        } else {
+          this.edited[prop] = 0;
+        }
       },
       editIncrease(prop) {
         if (!(prop in this.edited)) return;
         this.edited[prop]++;
+      },
+      editBlur(prop) {
+        const safeValue = Math.max(0, Math.floor(this.edited[prop]) || 0);
+        this.edited[prop] = null;
+        this.edited[prop] = safeValue;
       },
       editDelete() {
         if (this.editedList === null) return;
@@ -106,7 +115,7 @@ document.addEventListener('alpine:init', () => {
         this.editedList.splice(this.editedIndex, 1);
         editModalRef.hide();
       },
-      rotate() {
+      cycle() {
         this.state.firstPlayer = (this.state.firstPlayer + 1) % this.state.heroes.length;
       },
       reset() {
