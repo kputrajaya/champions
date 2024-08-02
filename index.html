@@ -164,7 +164,7 @@
                       ></label>
                       <div class="col-sm-9">
                         <div class="input-group">
-                          <button class="btn btn-secondary px-3" type="button" @click="editDecrease(prop)">-</button>
+                          <button class="btn btn-secondary px-4" type="button" @click="editDecrease(prop)">-</button>
                           <input
                             :id="'input' + prop"
                             class="form-control text-center"
@@ -172,7 +172,7 @@
                             x-model.number="edited[prop]"
                             @blur="editBlur(prop)"
                           />
-                          <button class="btn btn-secondary px-3" type="button" @click="editIncrease(prop)">+</button>
+                          <button class="btn btn-secondary px-4" type="button" @click="editIncrease(prop)">+</button>
                         </div>
                       </div>
                     </div>
