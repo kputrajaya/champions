@@ -49,9 +49,13 @@
                   <span class="badge text-bg-light fs-6 fw-semibold">
                     &#10084;&#65039; <span x-text="state.villain.health"></span>
                   </span>
-                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.tough">T</span>
-                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.stunned">S</span>
-                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.villain.confused">C</span>
+                  <span
+                    class="badge text-bg-light fs-7 fw-semibold"
+                    x-show="state.villain.tough || state.villain.stunned || state.villain.confused"
+                  >
+                    <span x-show="state.villain.tough">T</span><span x-show="state.villain.stunned">S</span
+                    ><span x-show="state.villain.confused">C</span>
+                  </span>
                 </li>
                 <li class="list-group-item text-bg-warning" @click="edit(state.mainScheme, null, null)">
                   <span class="badge text-bg-light fs-6 fw-semibold">
@@ -88,9 +92,13 @@
                     <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.counter > 0">
                       &#9201;&#65039; <span x-text="hero.counter"></span>
                     </span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.tough">T</span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.stunned">S</span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.confused">C</span>
+                    <span
+                      class="badge text-bg-light fs-7 fw-semibold"
+                      x-show="hero.tough || hero.stunned || hero.confused"
+                    >
+                      <span x-show="hero.tough">T</span><span x-show="hero.stunned">S</span
+                      ><span x-show="hero.confused">C</span>
+                    </span>
                   </li>
                   <li class="list-group-item text-bg-danger fs-7" @click="addMinion(hero)">Minions +</li>
                   <template x-for="(minion, minionIndex) in hero.minions">
@@ -101,9 +109,13 @@
                       <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.counter > 0">
                         &#9201;&#65039; <span x-text="minion.counter"></span>
                       </span>
-                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.tough">T</span>
-                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.stunned">S</span>
-                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.confused">C</span>
+                      <span
+                        class="badge text-bg-light fs-7 fw-semibold"
+                        x-show="minion.tough || minion.stunned || minion.confused"
+                      >
+                        <span x-show="minion.tough">T</span><span x-show="minion.stunned">S</span
+                        ><span x-show="minion.confused">C</span>
+                      </span>
                     </li>
                   </template>
                   <li class="list-group-item text-bg-info fs-7" @click="addAlly(hero)">Allies +</li>
@@ -115,9 +127,13 @@
                       <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.counter > 0">
                         &#9201;&#65039; <span x-text="ally.counter"></span>
                       </span>
-                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.tough">T</span>
-                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.stunned">S</span>
-                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.confused">C</span>
+                      <span
+                        class="badge text-bg-light fs-7 fw-semibold"
+                        x-show="ally.tough || ally.stunned || ally.confused"
+                      >
+                        <span x-show="ally.tough">T</span><span x-show="ally.stunned">S</span
+                        ><span x-show="ally.confused">C</span>
+                      </span>
                     </li>
                   </template>
                   <li class="list-group-item text-bg-secondary fs-7" @click="addCard(hero)">Cards +</li>
@@ -136,13 +152,13 @@
 
         <!-- Buttons -->
         <div x-show="!isSolo()">
-          <div class="d-grid mb-2">
+          <div class="d-grid">
             <button class="btn btn-secondary fs-7" type="button" @click="cycle()">Cycle P1</button>
           </div>
         </div>
         <div>
           <div class="d-grid">
-            <button class="btn btn-danger fs-7" type="button" @click="reset()">Reset</button>
+            <button class="btn btn-link fs-7 text-danger" type="button" @click="reset()">Reset</button>
           </div>
         </div>
 
@@ -174,8 +190,8 @@
                   </template>
                 </template>
                 <template x-if="'tough' in edited">
-                  <fieldset class="row mb-3 align-items-center">
-                    <legend class="col-form-label col-sm-3 pt-0">Status</legend>
+                  <fieldset class="row mb-3">
+                    <legend class="col-form-label col-sm-3 pt-1">Status</legend>
                     <div class="col-sm-9">
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="checkTough" x-model="edited.tough" />
