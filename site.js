@@ -48,6 +48,20 @@ document.addEventListener('alpine:init', () => {
   };
 
   const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
+  const getParams = () => {
+    const params = {};
+    const search = window.location.search;
+    if (search) {
+      search
+        .substring(1)
+        .split('&')
+        .forEach((param) => {
+          const [key, value] = param.split('=');
+          params[key] = decodeURIComponent(value).replace(/\+/g, ' ').replace(/\|/g, '\n');
+        });
+    }
+    return params;
+  };
 
   const editModalRef = new bootstrap.Modal('#editModal');
 
@@ -61,6 +75,7 @@ document.addEventListener('alpine:init', () => {
       edited: {},
       editedList: null,
       editedIndex: null,
+      lastJson: null,
 
       // Computed
       isSolo() {
@@ -130,6 +145,29 @@ document.addEventListener('alpine:init', () => {
         const response = prompt('Reset game? Type "y" to continue.') || '';
         if (response.trim().toLowerCase() !== 'y') return;
         this.state = deepCopy(BASE.state);
+      },
+
+      // Init pub-sub
+      init() {
+        const params = getParams();
+        if (params.key) {
+          const ws = new WebSocket('wss://pubsub.h.kvn.pt/');
+          ws.onopen = () => {
+            ws.send(JSON.stringify({ action: 'subscribe', key: params.key }));
+            console.log('Subscribed to', params.key);
+          };
+          ws.onmessage = (event) => {
+            this.lastJson = event.data;
+            if (JSON.stringify(this.state) === this.lastJson) return;
+            console.log('Updating data');
+            this.state = JSON.parse(event.data);
+          };
+          this.$watch('state', (value) => {
+            if (JSON.stringify(this.state) === this.lastJson) return;
+            console.log('Sending data');
+            ws.send(JSON.stringify({ action: 'publish', key: params.key, data: value }));
+          });
+        }
       },
     };
   });
