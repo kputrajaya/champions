@@ -4,14 +4,14 @@ document.addEventListener('alpine:init', () => {
       threat: 0,
     },
     minion: {
-      damage: 0,
+      health: 0,
       tough: false,
       stunned: false,
       confused: false,
       counter: 0,
     },
     ally: {
-      damage: 0,
+      health: 0,
       tough: false,
       stunned: false,
       confused: false,
@@ -75,16 +75,24 @@ document.addEventListener('alpine:init', () => {
         this.state.firstPlayer = Math.floor(Math.random() * heroCount);
       },
       addSideScheme() {
-        this.state.sideSchemes.push(deepCopy(BASE.sideScheme));
+        const sideScheme = deepCopy(BASE.sideScheme);
+        this.state.sideSchemes.push(sideScheme);
+        this.edit(sideScheme, this.state.sideSchemes, this.state.sideSchemes.length - 1);
       },
       addMinion(hero) {
-        hero.minions.push(deepCopy(BASE.minion));
+        const minion = deepCopy(BASE.minion);
+        hero.minions.push(minion);
+        this.edit(minion, hero.minions, hero.minions.length - 1);
       },
       addAlly(hero) {
-        hero.allies.push(deepCopy(BASE.ally));
+        const ally = deepCopy(BASE.ally);
+        hero.allies.push(ally);
+        this.edit(ally, hero.allies, hero.allies.length - 1);
       },
       addCard(hero) {
-        hero.cards.push(deepCopy(BASE.card));
+        const card = deepCopy(BASE.card);
+        hero.cards.push(card);
+        this.edit(card, hero.cards, hero.cards.length - 1);
       },
       edit(edited, editedList, editedIndex) {
         this.edited = edited;

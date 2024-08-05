@@ -56,7 +56,7 @@
 
 /* Components */
 .badge.first-player {
-  box-shadow: inset 0 0 0 3px #dc3545, 0 0 0 3px #0dcaf0;
+  box-shadow: inset 0 0 0 2px #dc3545, 0 0 0 2px #0dcaf0;
 }
 
 

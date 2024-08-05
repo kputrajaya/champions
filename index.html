@@ -46,7 +46,6 @@
             <div class="card mb-2">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item text-bg-danger" @click="edit(state.villain, null, null)">
-                  <span class="badge text-bg-dark me-1 fs-6 fw-bold">V</span>
                   <span class="badge text-bg-light fs-6 fw-semibold">
                     &#10084;&#65039; <span x-text="state.villain.health"></span>
                   </span>
@@ -84,7 +83,6 @@
               <div class="card mb-1">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item text-bg-secondary" @click="edit(hero, null, null)">
-                    <span class="badge text-bg-dark me-1 fs-6 fw-semibold" x-text="heroIndex + 1"></span>
                     <span
                       class="badge text-bg-light fs-6 fw-semibold"
                       :class="!isSolo() && heroIndex === state.firstPlayer ? 'first-player' : ''"
@@ -106,7 +104,7 @@
                   <template x-for="(minion, minionIndex) in hero.minions">
                     <li class="list-group-item text-bg-danger" @click="edit(minion, hero.minions, minionIndex)">
                       <span class="badge text-bg-light fs-7 fw-semibold">
-                        &#128165; <span x-text="minion.damage"></span>
+                        &#10084;&#65039; <span x-text="minion.health"></span>
                       </span>
                       <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.counter > 0">
                         &#9201;&#65039; <span x-text="minion.counter"></span>
@@ -124,7 +122,7 @@
                   <template x-for="(ally, allyIndex) in hero.allies">
                     <li class="list-group-item text-bg-info" @click="edit(ally, hero.allies, allyIndex)">
                       <span class="badge text-bg-light fs-7 fw-semibold">
-                        &#128165; <span x-text="ally.damage"></span>
+                        &#10084;&#65039; <span x-text="ally.health"></span>
                       </span>
                       <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.counter > 0">
                         &#9201;&#65039; <span x-text="ally.counter"></span>
@@ -172,7 +170,7 @@
                 <h6 class="modal-title">Edit Item</h6>
               </div>
               <div class="modal-body pb-0">
-                <template x-for="prop in ['health', 'damage', 'threat', 'acceleration', 'counter']">
+                <template x-for="prop in ['health', 'threat', 'acceleration', 'counter']">
                   <template x-if="prop in edited">
                     <div class="row mb-3 align-items-center">
                       <legend class="col-sm-3 col-form-label pt-0 text-capitalize" x-text="prop"></legend>
