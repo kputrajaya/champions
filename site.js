@@ -157,9 +157,8 @@ document.addEventListener('alpine:init', () => {
             console.log('Subscribed to', params.key);
           };
           ws.onmessage = (event) => {
-            this.lastJson = event.data;
-            if (JSON.stringify(this.state) === this.lastJson) return;
             console.log('Updating data');
+            this.lastJson = event.data;
             this.state = JSON.parse(event.data);
           };
           this.$watch('state', (value) => {
