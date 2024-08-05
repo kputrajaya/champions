@@ -149,23 +149,36 @@ document.addEventListener('alpine:init', () => {
 
       // Init pub-sub
       init() {
-        const params = getParams();
-        if (params.key) {
+        const connect = (subscriptionKey) => {
           const ws = new WebSocket('wss://pubsub.h.kvn.pt/');
           ws.onopen = () => {
-            ws.send(JSON.stringify({ action: 'subscribe', key: params.key }));
-            console.log('Subscribed to', params.key);
+            console.log('Socket opened');
+            ws.send(JSON.stringify({ action: 'subscribe', key: subscriptionKey }));
+            console.log('Subscribed to', subscriptionKey);
           };
           ws.onmessage = (event) => {
-            console.log('Updating data');
+            console.log('Received data');
             this.lastJson = event.data;
             this.state = JSON.parse(event.data);
+          };
+          ws.onclose = (e) => {
+            console.log('Socket closed', e.reason);
+            setTimeout(() => connect(subscriptionKey), 1000);
+          };
+          ws.onerror = function (err) {
+            console.log('Socket encountered error', err.message);
+            ws.close();
           };
           this.$watch('state', (value) => {
             if (JSON.stringify(this.state) === this.lastJson) return;
             console.log('Sending data');
-            ws.send(JSON.stringify({ action: 'publish', key: params.key, data: value }));
+            ws.send(JSON.stringify({ action: 'publish', key: subscriptionKey, data: value }));
           });
+        };
+
+        const params = getParams();
+        if (params.key) {
+          connect('champions:' + params.key);
         }
       },
     };
