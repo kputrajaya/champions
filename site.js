@@ -149,12 +149,12 @@ document.addEventListener('alpine:init', () => {
 
       // Init pub-sub
       init() {
-        const connect = (subscriptionKey) => {
+        const connect = (subKey) => {
           const ws = new WebSocket('wss://pubsub.h.kvn.pt/');
           ws.onopen = () => {
             console.log('Socket opened');
-            ws.send(JSON.stringify({ action: 'subscribe', key: subscriptionKey }));
-            console.log('Subscribed to', subscriptionKey);
+            ws.send(JSON.stringify({ action: 'sub', key: subKey }));
+            console.log('Subscribed to', subKey);
           };
           ws.onmessage = (event) => {
             console.log('Received data');
@@ -163,16 +163,16 @@ document.addEventListener('alpine:init', () => {
           };
           ws.onclose = (e) => {
             console.log('Socket closed', e.reason);
-            setTimeout(() => connect(subscriptionKey), 1000);
+            setTimeout(() => connect(subKey), 1000);
           };
           ws.onerror = function (err) {
-            console.log('Socket encountered error', err.message);
+            console.error('Socket encountered error', err.message);
             ws.close();
           };
           this.$watch('state', (value) => {
             if (JSON.stringify(this.state) === this.lastJson) return;
             console.log('Sending data');
-            ws.send(JSON.stringify({ action: 'publish', key: subscriptionKey, data: value }));
+            ws.send(JSON.stringify({ action: 'pub', key: subKey, data: value }));
           });
         };
 
