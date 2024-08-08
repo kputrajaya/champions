@@ -151,15 +151,15 @@ document.addEventListener('alpine:init', () => {
       init() {
         const connect = (subscriptionKey) => {
           const ws = new WebSocket('wss://pubsub.h.kvn.pt/');
-          ws.onopen = () => {
-            console.log('Socket opened');
-            ws.send(JSON.stringify({ action: 'subscribe', key: subscriptionKey }));
-            console.log('Subscribed to', subscriptionKey);
-          };
           ws.onmessage = (event) => {
             console.log('Received data');
             this.lastJson = event.data;
             this.state = JSON.parse(event.data);
+          };
+          ws.onopen = () => {
+            console.log('Socket opened');
+            ws.send(JSON.stringify({ action: 'subscribe', key: subscriptionKey }));
+            console.log('Subscribed to', subscriptionKey);
           };
           ws.onclose = (e) => {
             console.log('Socket closed', e.reason);
