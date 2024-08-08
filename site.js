@@ -176,8 +176,8 @@ document.addEventListener('alpine:init', () => {
         };
 
         const params = getParams();
-        if (params.key) {
-          connect('champions:' + params.key);
+        if (params.k) {
+          connect('champions:' + params.k);
         }
       },
     };
