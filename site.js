@@ -2,6 +2,7 @@ document.addEventListener('alpine:init', () => {
   const BASE = {
     sideScheme: {
       threat: 0,
+      counter: 0,
     },
     minion: {
       health: 0,
@@ -40,6 +41,7 @@ document.addEventListener('alpine:init', () => {
       mainScheme: {
         threat: 0,
         acceleration: 0,
+        counter: 0,
       },
       sideSchemes: [],
       heroes: [],

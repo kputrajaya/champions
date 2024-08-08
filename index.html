@@ -64,12 +64,18 @@
                   <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.mainScheme.acceleration > 0">
                     &#9195; <span x-text="state.mainScheme.acceleration"></span>
                   </span>
+                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.mainScheme.counter > 0">
+                    &#9201;&#65039; <span x-text="state.mainScheme.counter"></span>
+                  </span>
                 </li>
-                <li class="list-group-item text-bg-warning fs-7" @click="addSideScheme()">Side Schemes +</li>
+                <li class="list-group-item text-bg-warning fs-7" @click="addSideScheme()">Sides +</li>
                 <template x-for="(scheme, schemeIndex) in state.sideSchemes">
                   <li class="list-group-item text-bg-warning" @click="edit(scheme, state.sideSchemes, schemeIndex)">
                     <span class="badge text-bg-light fs-7 fw-semibold">
                       &#9888;&#65039; <span x-text="scheme.threat"></span>
+                    </span>
+                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="scheme.counter > 0">
+                      &#9201;&#65039; <span x-text="scheme.counter"></span>
                     </span>
                   </li>
                 </template>
