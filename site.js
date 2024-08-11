@@ -175,6 +175,10 @@ document.addEventListener('alpine:init', () => {
             console.log('Sending data');
             ws.send(JSON.stringify({ action: 'pub', key: subKey, data: value }));
           });
+          setInterval(() => {
+            console.log('Sending data (interval)');
+            ws.send(JSON.stringify({ action: 'pub', key: subKey, data: this.state }));
+          }, 30000);
         };
 
         const params = getParams();
