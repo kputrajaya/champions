@@ -171,7 +171,9 @@ document.addEventListener('alpine:init', () => {
             ws.close();
           };
           this.$watch('state', (value) => {
-            if (JSON.stringify(this.state) === this.lastJson) return;
+            const currentJson = JSON.stringify(value);
+            if (currentJson === this.lastJson) return;
+            this.lastJson = currentJson;
             console.log('Sending data');
             ws.send(JSON.stringify({ action: 'pub', key: subKey, data: value }));
           });
