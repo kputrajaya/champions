@@ -153,22 +153,14 @@ document.addEventListener('alpine:init', () => {
       init() {
         const connect = (subKey) => {
           const ws = new WebSocket('wss://pubsub.h.kvn.pt/');
-          ws.onmessage = (event) => {
-            console.log('Received data');
-            this.lastJson = event.data;
-            this.state = JSON.parse(event.data);
-          };
           ws.onopen = () => {
             console.log('Subscribing to:', subKey);
             ws.send(JSON.stringify({ action: 'sub', key: subKey }));
           };
-          ws.onclose = (e) => {
-            console.log('Socket closed:', e.reason);
-            setTimeout(() => connect(subKey), 1000);
-          };
-          ws.onerror = function (err) {
-            console.error('Socket error:', err.message);
-            ws.close();
+          ws.onmessage = (event) => {
+            console.log('Received data');
+            this.lastJson = event.data;
+            this.state = JSON.parse(event.data);
           };
           this.$watch('state', (value) => {
             const currentJson = JSON.stringify(value);
@@ -177,10 +169,19 @@ document.addEventListener('alpine:init', () => {
             console.log('Sending data');
             ws.send(JSON.stringify({ action: 'pub', key: subKey, data: value }));
           });
-          setInterval(() => {
+          const interval = setInterval(() => {
             console.log('Sending data (interval)');
             ws.send(JSON.stringify({ action: 'pub', key: subKey, data: this.state }));
           }, 30000);
+          ws.onerror = function (err) {
+            console.error('Socket error:', err.message);
+            ws.close();
+          };
+          ws.onclose = (e) => {
+            console.log('Socket closed:', e.reason);
+            setTimeout(() => connect(subKey), 1000);
+            clearInterval(interval);
+          };
         };
 
         const params = getParams();
