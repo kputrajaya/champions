@@ -161,32 +161,35 @@ document.addEventListener('alpine:init', () => {
       init() {
         const connect = (subKey) => {
           const ws = new WebSocket('wss://pubsub.h.kvn.pt/');
+          ws.onopen = () => {
+            console.log('Subscribing to:', subKey);
+            ws.send(JSON.stringify({ action: 'sub', key: subKey }));
+          };
           ws.onmessage = (event) => {
             console.log('Received data');
             this.lastJson = event.data;
             this.state = JSON.parse(event.data);
           };
-          ws.onopen = () => {
-            console.log('Subscribing to:', subKey);
-            ws.send(JSON.stringify({ action: 'sub', key: subKey }));
-          };
-          ws.onclose = (e) => {
-            console.log('Socket closed:', e.reason);
-            setTimeout(() => connect(subKey), 1000);
-          };
+          this.$watch('state', (value) => {
+            const currentJson = JSON.stringify(value);
+            if (currentJson === this.lastJson) return;
+            this.lastJson = currentJson;
+            console.log('Sending data');
+            ws.send(JSON.stringify({ action: 'pub', key: subKey, data: value }));
+          });
+          const interval = setInterval(() => {
+            console.log('Sending data (interval)');
+            ws.send(JSON.stringify({ action: 'pub', key: subKey, data: this.state }));
+          }, 30000);
           ws.onerror = function (err) {
             console.error('Socket error:', err.message);
             ws.close();
           };
-          this.$watch('state', (value) => {
-            if (JSON.stringify(this.state) === this.lastJson) return;
-            console.log('Sending data');
-            ws.send(JSON.stringify({ action: 'pub', key: subKey, data: value }));
-          });
-          setInterval(() => {
-            console.log('Sending data (interval)');
-            ws.send(JSON.stringify({ action: 'pub', key: subKey, data: this.state }));
-          }, 30000);
+          ws.onclose = (e) => {
+            console.log('Socket closed:', e.reason);
+            setTimeout(() => connect(subKey), 1000);
+            clearInterval(interval);
+          };
         };
 
         const params = getParams();
