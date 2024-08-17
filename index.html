@@ -49,13 +49,10 @@
                   <span class="badge text-bg-light fs-6 fw-semibold">
                     &#10084;&#65039; <span x-text="state.villain.health"></span>
                   </span>
-                  <span
-                    class="badge text-bg-light fs-7 fw-semibold"
-                    x-show="state.villain.tough || state.villain.stunned || state.villain.confused"
-                  >
-                    <span x-show="state.villain.tough">T</span><span x-show="state.villain.stunned">S</span
-                    ><span x-show="state.villain.stunned2">S</span><span x-show="state.villain.confused">C</span
-                    ><span x-show="state.villain.confused2">C</span>
+                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="statusActive(state.villain)">
+                    <span x-show="state.villain.tough">T</span><span x-show="state.villain.tough2">T</span
+                    ><span x-show="state.villain.stunned">S</span><span x-show="state.villain.stunned2">S</span
+                    ><span x-show="state.villain.confused">C</span><span x-show="state.villain.confused2">C</span>
                   </span>
                 </li>
                 <li class="list-group-item text-bg-warning" @click="edit(state.mainScheme, null, null)">
@@ -99,13 +96,10 @@
                     <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.counter > 0">
                       &#9201;&#65039; <span x-text="hero.counter"></span>
                     </span>
-                    <span
-                      class="badge text-bg-light fs-7 fw-semibold"
-                      x-show="hero.tough || hero.stunned || hero.confused"
-                    >
-                      <span x-show="hero.tough">T</span><span x-show="hero.stunned">S</span
-                      ><span x-show="hero.stunned2">S</span><span x-show="hero.confused">C</span
-                      ><span x-show="hero.confused2">C</span>
+                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="statusActive(hero)">
+                      <span x-show="hero.tough">T</span><span x-show="hero.tough2">T</span
+                      ><span x-show="hero.stunned">S</span><span x-show="hero.stunned2">S</span
+                      ><span x-show="hero.confused">C</span><span x-show="hero.confused2">C</span>
                     </span>
                   </li>
                   <li class="list-group-item text-bg-danger fs-7" @click="addMinion(hero)">Minions +</li>
@@ -117,13 +111,10 @@
                       <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.counter > 0">
                         &#9201;&#65039; <span x-text="minion.counter"></span>
                       </span>
-                      <span
-                        class="badge text-bg-light fs-7 fw-semibold"
-                        x-show="minion.tough || minion.stunned || minion.confused"
-                      >
-                        <span x-show="minion.tough">T</span><span x-show="minion.stunned">S</span
-                        ><span x-show="minion.stunned2">S</span><span x-show="minion.confused">C</span
-                        ><span x-show="minion.confused2">C</span>
+                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="statusActive(minion)">
+                        <span x-show="minion.tough">T</span><span x-show="minion.tough2">T</span
+                        ><span x-show="minion.stunned">S</span><span x-show="minion.stunned2">S</span
+                        ><span x-show="minion.confused">C</span><span x-show="minion.confused2">C</span>
                       </span>
                     </li>
                   </template>
@@ -136,13 +127,10 @@
                       <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.counter > 0">
                         &#9201;&#65039; <span x-text="ally.counter"></span>
                       </span>
-                      <span
-                        class="badge text-bg-light fs-7 fw-semibold"
-                        x-show="ally.tough || ally.stunned || ally.confused"
-                      >
-                        <span x-show="ally.tough">T</span><span x-show="ally.stunned">S</span
-                        ><span x-show="ally.stunned2">S</span><span x-show="ally.confused">C</span
-                        ><span x-show="ally.confused2">C</span>
+                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="statusActive(ally)">
+                        <span x-show="ally.tough">T</span><span x-show="ally.tough2">T</span
+                        ><span x-show="ally.stunned">S</span><span x-show="ally.stunned2">S</span
+                        ><span x-show="ally.confused">C</span><span x-show="ally.confused2">C</span>
                       </span>
                     </li>
                   </template>
@@ -205,37 +193,26 @@
                     <div class="col-sm-9">
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="cbTough" x-model="edited.tough" />
-                        <label class="form-check-label" for="cbTough">
+                        <input class="form-check-input mx-2" type="checkbox" x-model="edited.tough2" />
+                        <label class="form-check-label ps-0" for="cbTough">
                           Tough
                           <span class="badge fs-8 fw-normal text-muted bg-light">prevent damage</span>
                         </label>
                       </div>
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="cbStunned" x-model="edited.stunned" />
-                        <label class="form-check-label" for="cbStunned">
+                        <input class="form-check-input mx-2" type="checkbox" x-model="edited.stunned2" />
+                        <label class="form-check-label ps-0" for="cbStunned">
                           Stunned
                           <span class="badge fs-8 fw-normal text-muted bg-light">cancel ATK</span>
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="cbStunned2" x-model="edited.stunned2" />
-                        <label class="form-check-label" for="cbStunned2">
-                          Stunned
-                          <span class="badge fs-8 fw-normal text-muted bg-light">used if "steady"</span>
-                        </label>
-                      </div>
-                      <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="cbConfused" x-model="edited.confused" />
-                        <label class="form-check-label" for="cbConfused">
+                        <input class="form-check-input mx-2" type="checkbox" x-model="edited.confused2" />
+                        <label class="form-check-label ps-0" for="cbConfused">
                           Confused
                           <span class="badge fs-8 fw-normal text-muted bg-light">cancel SCH / THW</span>
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="cbConfused2" x-model="edited.confused2" />
-                        <label class="form-check-label" for="cbConfused2">
-                          Confused
-                          <span class="badge fs-8 fw-normal text-muted bg-light">used if "steady"</span>
                         </label>
                       </div>
                     </div>

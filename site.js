@@ -7,18 +7,20 @@ document.addEventListener('alpine:init', () => {
     minion: {
       health: 0,
       tough: false,
+      tough2: false,
       stunned: false,
-      confused: false,
       stunned2: false,
+      confused: false,
       confused2: false,
       counter: 0,
     },
     ally: {
       health: 0,
       tough: false,
+      tough2: false,
       stunned: false,
-      confused: false,
       stunned2: false,
+      confused: false,
       confused2: false,
       counter: 0,
     },
@@ -28,9 +30,10 @@ document.addEventListener('alpine:init', () => {
     hero: {
       health: 10,
       tough: false,
+      tough2: false,
       stunned: false,
-      confused: false,
       stunned2: false,
+      confused: false,
       confused2: false,
       minions: [],
       allies: [],
@@ -41,9 +44,10 @@ document.addEventListener('alpine:init', () => {
       villain: {
         health: 0,
         tough: false,
+        tough2: false,
         stunned: false,
-        confused: false,
         stunned2: false,
+        confused: false,
         confused2: false,
       },
       mainScheme: {
@@ -155,6 +159,9 @@ document.addEventListener('alpine:init', () => {
         const response = prompt('Reset game? Type "y" to continue.') || '';
         if (response.trim().toLowerCase() !== 'y') return;
         this.state = deepCopy(BASE.state);
+      },
+      statusActive(item) {
+        return item.tough || item.tough2 || item.stunned || item.stunned2 || item.confused || item.confused2;
       },
 
       // Initialization
