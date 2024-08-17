@@ -9,6 +9,8 @@ document.addEventListener('alpine:init', () => {
       tough: false,
       stunned: false,
       confused: false,
+      stunned2: false,
+      confused2: false,
       counter: 0,
     },
     ally: {
@@ -16,6 +18,8 @@ document.addEventListener('alpine:init', () => {
       tough: false,
       stunned: false,
       confused: false,
+      stunned2: false,
+      confused2: false,
       counter: 0,
     },
     card: {
@@ -26,6 +30,8 @@ document.addEventListener('alpine:init', () => {
       tough: false,
       stunned: false,
       confused: false,
+      stunned2: false,
+      confused2: false,
       minions: [],
       allies: [],
       cards: [],
@@ -37,6 +43,8 @@ document.addEventListener('alpine:init', () => {
         tough: false,
         stunned: false,
         confused: false,
+        stunned2: false,
+        confused2: false,
       },
       mainScheme: {
         threat: 0,
