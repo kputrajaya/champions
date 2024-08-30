@@ -66,7 +66,7 @@
                     &#9201;&#65039; <span x-text="state.mainScheme.counter"></span>
                   </span>
                 </li>
-                <li class="list-group-item text-bg-warning fs-7" @click="addSideScheme()">Sides +</li>
+                <li class="list-group-item text-bg-warning fs-7" @click="addSideScheme()">Sides &plus;</li>
                 <template x-for="(scheme, schemeIndex) in state.sideSchemes">
                   <li class="list-group-item text-bg-warning" @click="edit(scheme, state.sideSchemes, schemeIndex)">
                     <span class="badge text-bg-light fs-7 fw-semibold">
@@ -102,7 +102,7 @@
                       ><span x-show="hero.confused">C</span><span x-show="hero.confused2">C</span>
                     </span>
                   </li>
-                  <li class="list-group-item text-bg-danger fs-7" @click="addMinion(hero)">Minions +</li>
+                  <li class="list-group-item text-bg-danger fs-7" @click="addMinion(hero)">Minions &plus;</li>
                   <template x-for="(minion, minionIndex) in hero.minions">
                     <li class="list-group-item text-bg-danger" @click="edit(minion, hero.minions, minionIndex)">
                       <span class="badge text-bg-light fs-7 fw-semibold">
@@ -118,7 +118,7 @@
                       </span>
                     </li>
                   </template>
-                  <li class="list-group-item text-bg-info fs-7" @click="addAlly(hero)">Allies +</li>
+                  <li class="list-group-item text-bg-info fs-7" @click="addAlly(hero)">Allies &plus;</li>
                   <template x-for="(ally, allyIndex) in hero.allies">
                     <li class="list-group-item text-bg-info" @click="edit(ally, hero.allies, allyIndex)">
                       <span class="badge text-bg-light fs-7 fw-semibold">
@@ -134,7 +134,7 @@
                       </span>
                     </li>
                   </template>
-                  <li class="list-group-item text-bg-secondary fs-7" @click="addCard(hero)">Cards +</li>
+                  <li class="list-group-item text-bg-secondary fs-7" @click="addCard(hero)">Cards &plus;</li>
                   <template x-for="(card, cardIndex) in hero.cards">
                     <li class="list-group-item text-bg-secondary" @click="edit(card, hero.cards, cardIndex)">
                       <span class="badge text-bg-light fs-7 fw-semibold">
@@ -174,14 +174,18 @@
                       <legend class="col-sm-3 col-form-label pt-0 text-capitalize" x-text="prop"></legend>
                       <div class="col-sm-9">
                         <div class="input-group">
-                          <button class="btn btn-secondary px-5" type="button" @click="editDecrease(prop)">-</button>
+                          <button class="btn btn-secondary px-5" type="button" @click="editDecrease(prop)">
+                            &minus;
+                          </button>
                           <input
                             class="form-control text-center"
                             type="phone"
                             x-model.number="edited[prop]"
                             @blur="editBlur(prop)"
                           />
-                          <button class="btn btn-secondary px-5" type="button" @click="editIncrease(prop)">+</button>
+                          <button class="btn btn-secondary px-5" type="button" @click="editIncrease(prop)">
+                            &plus;
+                          </button>
                         </div>
                       </div>
                     </div>
