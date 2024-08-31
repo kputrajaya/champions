@@ -147,7 +147,6 @@ document.addEventListener('alpine:init', () => {
         const safeValue = Math.max(0, Math.floor(this.edited[prop]) || 0);
         this.edited[prop] = null;
         this.edited[prop] = safeValue;
-        this.actionConfirmed = false;
       },
       editDelete() {
         if (this.editedList === null) return;
@@ -156,7 +155,7 @@ document.addEventListener('alpine:init', () => {
           this.actionConfirmed = true;
           this.actionConfirmedTimeout = setTimeout(() => {
             this.actionConfirmed = false;
-          }, 2000);
+          }, 1500);
           return;
         }
         this.actionConfirmed = false;
