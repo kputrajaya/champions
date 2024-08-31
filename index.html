@@ -223,7 +223,12 @@
                   </fieldset>
                 </template>
                 <div class="d-grid">
-                  <button class="btn btn-danger mb-3" x-show="editedList !== null" @click="editDelete()">Delete</button>
+                  <button
+                    class="btn btn-danger mb-3"
+                    x-show="editedList !== null"
+                    @click="editDelete()"
+                    x-text="actionConfirmed ? 'Confirm?' : 'Delete'"
+                  ></button>
                 </div>
               </div>
             </div>

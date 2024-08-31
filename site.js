@@ -89,6 +89,8 @@ document.addEventListener('alpine:init', () => {
       edited: {},
       editedList: null,
       editedIndex: null,
+      actionConfirmed: false,
+      actionConfirmedTimeout: null,
       lastJson: null,
 
       // Computed
@@ -148,7 +150,14 @@ document.addEventListener('alpine:init', () => {
       },
       editDelete() {
         if (this.editedList === null) return;
-        if (!confirm('Delete this item?')) return;
+        if (!this.actionConfirmed) {
+          clearTimeout(this.actionConfirmedTimeout);
+          this.actionConfirmed = true;
+          this.actionConfirmedTimeout = setTimeout(() => {
+            this.actionConfirmed = false;
+          }, 2000);
+          return;
+        }
         this.editedList.splice(this.editedIndex, 1);
         editModalRef.hide();
       },
