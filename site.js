@@ -129,6 +129,7 @@ document.addEventListener('alpine:init', () => {
         this.edited = edited;
         this.editedList = editedList;
         this.editedIndex = editedIndex;
+        this.actionConfirmed = false;
         editModalRef.show();
       },
       editDecrease(prop) {
@@ -151,14 +152,13 @@ document.addEventListener('alpine:init', () => {
       editDelete() {
         if (this.editedList === null) return;
         if (!this.actionConfirmed) {
-          clearTimeout(this.actionConfirmedTimeout);
           this.actionConfirmed = true;
+          clearTimeout(this.actionConfirmedTimeout);
           this.actionConfirmedTimeout = setTimeout(() => {
             this.actionConfirmed = false;
-          }, 1500);
+          }, 2000);
           return;
         }
-        this.actionConfirmed = false;
         this.editedList.splice(this.editedIndex, 1);
         editModalRef.hide();
       },
