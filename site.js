@@ -158,6 +158,7 @@ document.addEventListener('alpine:init', () => {
           }, 2000);
           return;
         }
+        this.actionConfirmed = false;
         this.editedList.splice(this.editedIndex, 1);
         editModalRef.hide();
       },
