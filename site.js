@@ -197,7 +197,7 @@ document.addEventListener('alpine:init', () => {
           const interval = setInterval(() => {
             console.log('Sending data (interval)');
             ws.send(JSON.stringify({ action: 'pub', key: subKey, data: this.state }));
-          }, 30000);
+          }, 60000);
           ws.onerror = function (err) {
             console.error('Socket error:', err.message);
             ws.close();
