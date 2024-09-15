@@ -49,6 +49,8 @@ document.addEventListener('alpine:init', () => {
         stunned2: false,
         confused: false,
         confused2: false,
+        minions: [],
+        counter: 0,
       },
       mainScheme: {
         threat: 0,
