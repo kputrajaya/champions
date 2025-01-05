@@ -41,7 +41,7 @@ const BASE = {
   },
   state: {
     villain: {
-      health: 0,
+      health: 20,
       tough: false,
       tough2: false,
       stunned: false,
