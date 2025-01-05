@@ -1,34 +1,47 @@
-document.addEventListener('alpine:init', () => {
-  const BASE = {
-    sideScheme: {
-      threat: 0,
-      counter: 0,
-    },
-    minion: {
+const BASE = {
+  sideScheme: {
+    threat: 0,
+    counter: 0,
+  },
+  minion: {
+    health: 2,
+    tough: false,
+    tough2: false,
+    stunned: false,
+    stunned2: false,
+    confused: false,
+    confused2: false,
+    counter: 0,
+  },
+  ally: {
+    health: 2,
+    tough: false,
+    tough2: false,
+    stunned: false,
+    stunned2: false,
+    confused: false,
+    confused2: false,
+    counter: 0,
+  },
+  card: {
+    counter: 0,
+  },
+  hero: {
+    health: 10,
+    tough: false,
+    tough2: false,
+    stunned: false,
+    stunned2: false,
+    confused: false,
+    confused2: false,
+    minions: [],
+    allies: [],
+    cards: [],
+    counter: 0,
+  },
+  state: {
+    villain: {
       health: 0,
-      tough: false,
-      tough2: false,
-      stunned: false,
-      stunned2: false,
-      confused: false,
-      confused2: false,
-      counter: 0,
-    },
-    ally: {
-      health: 0,
-      tough: false,
-      tough2: false,
-      stunned: false,
-      stunned2: false,
-      confused: false,
-      confused2: false,
-      counter: 0,
-    },
-    card: {
-      counter: 0,
-    },
-    hero: {
-      health: 10,
       tough: false,
       tough2: false,
       stunned: false,
@@ -36,32 +49,21 @@ document.addEventListener('alpine:init', () => {
       confused: false,
       confused2: false,
       minions: [],
-      allies: [],
-      cards: [],
       counter: 0,
     },
-    state: {
-      villain: {
-        health: 0,
-        tough: false,
-        tough2: false,
-        stunned: false,
-        stunned2: false,
-        confused: false,
-        confused2: false,
-        minions: [],
-        counter: 0,
-      },
-      mainScheme: {
-        threat: 0,
-        acceleration: 0,
-        counter: 0,
-      },
-      sideSchemes: [],
-      heroes: [],
-      firstPlayer: 0,
+    mainScheme: {
+      threat: 0,
+      acceleration: 0,
+      counter: 0,
     },
-  };
+    sideSchemes: [],
+    heroes: [],
+    firstPlayer: 0,
+  },
+};
+
+document.addEventListener('alpine:init', () => {
+  const editModalRef = new bootstrap.Modal('#editModal');
 
   const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
   const getParams = () => {
@@ -78,8 +80,6 @@ document.addEventListener('alpine:init', () => {
     }
     return params;
   };
-
-  const editModalRef = new bootstrap.Modal('#editModal');
 
   Alpine.data('mct', function () {
     return {
