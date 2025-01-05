@@ -4,7 +4,7 @@ const BASE = {
     counter: 0,
   },
   minion: {
-    health: 2,
+    health: 3,
     tough: false,
     tough2: false,
     stunned: false,
@@ -14,7 +14,7 @@ const BASE = {
     counter: 0,
   },
   ally: {
-    health: 2,
+    health: 3,
     tough: false,
     tough2: false,
     stunned: false,
@@ -41,7 +41,7 @@ const BASE = {
   },
   state: {
     villain: {
-      health: 20,
+      health: 30,
       tough: false,
       tough2: false,
       stunned: false,
