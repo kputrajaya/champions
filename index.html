@@ -46,25 +46,26 @@
             <div class="card mb-2">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item text-bg-danger fs-7" @click="addMinion(state.villain)">Villains &plus;</li>
-                <li class="list-group-item text-bg-danger" @click="edit(state.villain, null, null)">
-                  <span class="badge text-bg-light fs-6 fw-semibold">
+                <li class="list-group-item text-bg-danger bg-opacity-75" @click="edit(state.villain, null, null)">
+                  <span class="badge fs-6 fw-semibold">
                     &#10084;&#65039; <span x-text="state.villain.health"></span>
                   </span>
-                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="statusActive(state.villain)">
+                  <span class="badge fs-7 fw-semibold" x-show="statusActive(state.villain)">
                     <span x-show="state.villain.tough">T</span><span x-show="state.villain.tough2">T</span
                     ><span x-show="state.villain.stunned">S</span><span x-show="state.villain.stunned2">S</span
                     ><span x-show="state.villain.confused">C</span><span x-show="state.villain.confused2">C</span>
                   </span>
                 </li>
                 <template x-for="(minion, minionIndex) in state.villain.minions">
-                  <li class="list-group-item text-bg-danger" @click="edit(minion, state.villain.minions, minionIndex)">
-                    <span class="badge text-bg-light fs-7 fw-semibold">
-                      &#10084;&#65039; <span x-text="minion.health"></span>
-                    </span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.counter > 0">
+                  <li
+                    class="list-group-item text-bg-danger bg-opacity-75"
+                    @click="edit(minion, state.villain.minions, minionIndex)"
+                  >
+                    <span class="badge fs-7 fw-semibold"> &#10084;&#65039; <span x-text="minion.health"></span> </span>
+                    <span class="badge fs-7 fw-semibold" x-show="minion.counter > 0">
                       &#9201;&#65039; <span x-text="minion.counter"></span>
                     </span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="statusActive(minion)">
+                    <span class="badge fs-7 fw-semibold" x-show="statusActive(minion)">
                       <span x-show="minion.tough">T</span><span x-show="minion.tough2">T</span
                       ><span x-show="minion.stunned">S</span><span x-show="minion.stunned2">S</span
                       ><span x-show="minion.confused">C</span><span x-show="minion.confused2">C</span>
@@ -72,23 +73,24 @@
                   </li>
                 </template>
                 <li class="list-group-item text-bg-warning fs-7" @click="addSideScheme()">Schemes &plus;</li>
-                <li class="list-group-item text-bg-warning" @click="edit(state.mainScheme, null, null)">
-                  <span class="badge text-bg-light fs-6 fw-semibold">
+                <li class="list-group-item text-bg-warning bg-opacity-50" @click="edit(state.mainScheme, null, null)">
+                  <span class="badge fs-6 fw-semibold">
                     &#9888;&#65039; <span x-text="state.mainScheme.threat"></span>
                   </span>
-                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.mainScheme.acceleration > 0">
+                  <span class="badge fs-7 fw-semibold" x-show="state.mainScheme.acceleration > 0">
                     &#9195; <span x-text="state.mainScheme.acceleration"></span>
                   </span>
-                  <span class="badge text-bg-light fs-7 fw-semibold" x-show="state.mainScheme.counter > 0">
+                  <span class="badge fs-7 fw-semibold" x-show="state.mainScheme.counter > 0">
                     &#9201;&#65039; <span x-text="state.mainScheme.counter"></span>
                   </span>
                 </li>
                 <template x-for="(scheme, schemeIndex) in state.sideSchemes">
-                  <li class="list-group-item text-bg-warning" @click="edit(scheme, state.sideSchemes, schemeIndex)">
-                    <span class="badge text-bg-light fs-7 fw-semibold">
-                      &#9888;&#65039; <span x-text="scheme.threat"></span>
-                    </span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="scheme.counter > 0">
+                  <li
+                    class="list-group-item text-bg-warning bg-opacity-50"
+                    @click="edit(scheme, state.sideSchemes, schemeIndex)"
+                  >
+                    <span class="badge fs-7 fw-semibold"> &#9888;&#65039; <span x-text="scheme.threat"></span> </span>
+                    <span class="badge fs-7 fw-semibold" x-show="scheme.counter > 0">
                       &#9201;&#65039; <span x-text="scheme.counter"></span>
                     </span>
                   </li>
@@ -104,15 +106,15 @@
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item text-bg-secondary" @click="edit(hero, null, null)">
                     <span
-                      class="badge text-bg-light fs-6 fw-semibold"
+                      class="badge fs-6 fw-semibold"
                       :class="!isSolo() && heroIndex === state.firstPlayer ? 'first-player' : ''"
                     >
                       &#10084;&#65039; <span x-text="hero.health"></span>
                     </span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="hero.counter > 0">
+                    <span class="badge fs-7 fw-semibold" x-show="hero.counter > 0">
                       &#9201;&#65039; <span x-text="hero.counter"></span>
                     </span>
-                    <span class="badge text-bg-light fs-7 fw-semibold" x-show="statusActive(hero)">
+                    <span class="badge fs-7 fw-semibold" x-show="statusActive(hero)">
                       <span x-show="hero.tough">T</span><span x-show="hero.tough2">T</span
                       ><span x-show="hero.stunned">S</span><span x-show="hero.stunned2">S</span
                       ><span x-show="hero.confused">C</span><span x-show="hero.confused2">C</span>
@@ -120,14 +122,17 @@
                   </li>
                   <li class="list-group-item text-bg-danger fs-7" @click="addMinion(hero)">Minions &plus;</li>
                   <template x-for="(minion, minionIndex) in hero.minions">
-                    <li class="list-group-item text-bg-danger" @click="edit(minion, hero.minions, minionIndex)">
-                      <span class="badge text-bg-light fs-7 fw-semibold">
+                    <li
+                      class="list-group-item text-bg-danger bg-opacity-75"
+                      @click="edit(minion, hero.minions, minionIndex)"
+                    >
+                      <span class="badge fs-7 fw-semibold">
                         &#10084;&#65039; <span x-text="minion.health"></span>
                       </span>
-                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="minion.counter > 0">
+                      <span class="badge fs-7 fw-semibold" x-show="minion.counter > 0">
                         &#9201;&#65039; <span x-text="minion.counter"></span>
                       </span>
-                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="statusActive(minion)">
+                      <span class="badge fs-7 fw-semibold" x-show="statusActive(minion)">
                         <span x-show="minion.tough">T</span><span x-show="minion.tough2">T</span
                         ><span x-show="minion.stunned">S</span><span x-show="minion.stunned2">S</span
                         ><span x-show="minion.confused">C</span><span x-show="minion.confused2">C</span>
@@ -136,14 +141,12 @@
                   </template>
                   <li class="list-group-item text-bg-info fs-7" @click="addAlly(hero)">Allies &plus;</li>
                   <template x-for="(ally, allyIndex) in hero.allies">
-                    <li class="list-group-item text-bg-info" @click="edit(ally, hero.allies, allyIndex)">
-                      <span class="badge text-bg-light fs-7 fw-semibold">
-                        &#10084;&#65039; <span x-text="ally.health"></span>
-                      </span>
-                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="ally.counter > 0">
+                    <li class="list-group-item text-bg-info bg-opacity-50" @click="edit(ally, hero.allies, allyIndex)">
+                      <span class="badge fs-7 fw-semibold"> &#10084;&#65039; <span x-text="ally.health"></span> </span>
+                      <span class="badge fs-7 fw-semibold" x-show="ally.counter > 0">
                         &#9201;&#65039; <span x-text="ally.counter"></span>
                       </span>
-                      <span class="badge text-bg-light fs-7 fw-semibold" x-show="statusActive(ally)">
+                      <span class="badge fs-7 fw-semibold" x-show="statusActive(ally)">
                         <span x-show="ally.tough">T</span><span x-show="ally.tough2">T</span
                         ><span x-show="ally.stunned">S</span><span x-show="ally.stunned2">S</span
                         ><span x-show="ally.confused">C</span><span x-show="ally.confused2">C</span>
@@ -152,10 +155,11 @@
                   </template>
                   <li class="list-group-item text-bg-secondary fs-7" @click="addCard(hero)">Cards &plus;</li>
                   <template x-for="(card, cardIndex) in hero.cards">
-                    <li class="list-group-item text-bg-secondary" @click="edit(card, hero.cards, cardIndex)">
-                      <span class="badge text-bg-light fs-7 fw-semibold">
-                        &#9201;&#65039; <span x-text="card.counter"></span>
-                      </span>
+                    <li
+                      class="list-group-item text-bg-secondary bg-opacity-75"
+                      @click="edit(card, hero.cards, cardIndex)"
+                    >
+                      <span class="badge fs-7 fw-semibold"> &#9201;&#65039; <span x-text="card.counter"></span> </span>
                     </li>
                   </template>
                 </ul>
@@ -212,27 +216,27 @@
                     <legend class="col-form-label col-sm-3 pt-1">Status</legend>
                     <div class="col-sm-9">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="cbTough" x-model="edited.tough" />
-                        <input class="form-check-input mx-2" type="checkbox" x-model="edited.tough2" />
-                        <label class="form-check-label ps-0" for="cbTough">
+                        <input class="form-check-input" type="checkbox" x-model="edited.tough2" />
+                        <input class="form-check-input mx-2" type="checkbox" id="checkboxT" x-model="edited.tough" />
+                        <label class="form-check-label ps-0" for="checkboxT">
                           Tough
-                          <span class="badge fs-8 fw-normal text-muted bg-light">prevent damage</span>
+                          <span class="badge fs-8 fw-normal text-muted">prevent damage</span>
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="cbStunned" x-model="edited.stunned" />
-                        <input class="form-check-input mx-2" type="checkbox" x-model="edited.stunned2" />
-                        <label class="form-check-label ps-0" for="cbStunned">
+                        <input class="form-check-input" type="checkbox" x-model="edited.stunned2" />
+                        <input class="form-check-input mx-2" type="checkbox" id="checkboxS" x-model="edited.stunned" />
+                        <label class="form-check-label ps-0" for="checkboxS">
                           Stunned
-                          <span class="badge fs-8 fw-normal text-muted bg-light">cancel ATK</span>
+                          <span class="badge fs-8 fw-normal text-muted">cancel ATK</span>
                         </label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="cbConfused" x-model="edited.confused" />
-                        <input class="form-check-input mx-2" type="checkbox" x-model="edited.confused2" />
-                        <label class="form-check-label ps-0" for="cbConfused">
+                        <input class="form-check-input" type="checkbox" x-model="edited.confused2" />
+                        <input class="form-check-input mx-2" type="checkbox" id="checkboxC" x-model="edited.confused" />
+                        <label class="form-check-label ps-0" for="checkboxC">
                           Confused
-                          <span class="badge fs-8 fw-normal text-muted bg-light">cancel SCH / THW</span>
+                          <span class="badge fs-8 fw-normal text-muted">cancel SCH / THW</span>
                         </label>
                       </div>
                     </div>

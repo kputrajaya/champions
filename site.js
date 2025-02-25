@@ -1,6 +1,6 @@
 const BASE = {
   sideScheme: {
-    threat: 0,
+    threat: 3,
     counter: 0,
   },
   minion: {
@@ -24,7 +24,7 @@ const BASE = {
     counter: 0,
   },
   card: {
-    counter: 0,
+    counter: 3,
   },
   hero: {
     health: 10,

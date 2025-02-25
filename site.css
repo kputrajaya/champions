@@ -2,6 +2,10 @@
   font-family: Arial, sans-serif;
 }
 
+html {
+  min-height: 100%;
+}
+
 
 /* Attributes */
 [x-cloak] {
@@ -20,6 +24,10 @@
 
 
 /* Overrides */
+.bg-light {
+  background-color: #eee !important;
+}
+
 .container {
   max-width: 992px;
 }
@@ -31,6 +39,11 @@
 .card {
   border: 0;
   overflow: hidden;
+}
+
+.badge {
+  background: #fff !important;
+  color: #000;
 }
 
 .list-group-item {
