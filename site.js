@@ -67,17 +67,17 @@ document.addEventListener('alpine:init', () => {
 
   const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
   const getParams = () => {
-    const params = {};
     const search = window.location.search;
-    if (search) {
-      search
-        .substring(1)
-        .split('&')
-        .forEach((param) => {
-          const [key, value] = param.split('=');
-          params[key] = decodeURIComponent(value).replace(/\+/g, ' ').replace(/\|/g, '\n');
-        });
-    }
+    const params = {};
+    if (!search) return params;
+
+    search
+      .substring(1)
+      .split('&')
+      .forEach((param) => {
+        const [key, value] = param.split('=');
+        params[key] = decodeURIComponent(value).replace(/\+/g, ' ').replace(/\|/g, '\n');
+      });
     return params;
   };
 
@@ -100,7 +100,7 @@ document.addEventListener('alpine:init', () => {
         return this.state.heroes.length === 1;
       },
 
-      // Method
+      // Methods
       initHeroes(heroCount) {
         for (let i = 0; i < heroCount; i++) {
           this.state.heroes.push(deepCopy(BASE.hero));
@@ -136,11 +136,7 @@ document.addEventListener('alpine:init', () => {
       },
       editDecrease(prop) {
         if (!(prop in this.edited)) return;
-        if (this.edited[prop] > 0) {
-          this.edited[prop]--;
-        } else {
-          this.edited[prop] = 0;
-        }
+        this.edited[prop] = Math.max(0, this.edited[prop] - 1);
       },
       editIncrease(prop) {
         if (!(prop in this.edited)) return;
