@@ -66,20 +66,6 @@ document.addEventListener('alpine:init', () => {
   const editModalRef = new bootstrap.Modal('#editModal');
 
   const deepCopy = (obj) => JSON.parse(JSON.stringify(obj));
-  const getParams = () => {
-    const search = window.location.search;
-    const params = {};
-    if (!search) return params;
-
-    search
-      .substring(1)
-      .split('&')
-      .forEach((param) => {
-        const [key, value] = param.split('=');
-        params[key] = decodeURIComponent(value).replace(/\+/g, ' ').replace(/\|/g, '\n');
-      });
-    return params;
-  };
 
   Alpine.data('mct', function () {
     return {
@@ -174,43 +160,13 @@ document.addEventListener('alpine:init', () => {
 
       // Initialization
       init() {
-        const connect = (subKey) => {
-          const ws = new WebSocket('wss://pubsub.h.kvn.pt/');
-          ws.onopen = () => {
-            console.log('Subscribing to:', subKey);
-            ws.send(JSON.stringify({ action: 'sub', key: subKey }));
-          };
-          ws.onmessage = (event) => {
-            console.log('Received data');
-            this.lastJson = event.data;
-            this.state = JSON.parse(event.data);
-          };
-          this.$watch('state', (value) => {
-            const currentJson = JSON.stringify(value);
-            if (currentJson === this.lastJson) return;
-            this.lastJson = currentJson;
-            console.log('Sending data');
-            ws.send(JSON.stringify({ action: 'pub', key: subKey, data: value }));
-          });
-          const interval = setInterval(() => {
-            console.log('Sending data (interval)');
-            ws.send(JSON.stringify({ action: 'pub', key: subKey, data: this.state }));
-          }, 60000);
-          ws.onerror = function (err) {
-            console.error('Socket error:', err.message);
-            ws.close();
-          };
-          ws.onclose = (e) => {
-            console.log('Socket closed:', e.reason);
-            setTimeout(() => connect(subKey), 1000);
-            clearInterval(interval);
-          };
-        };
-
-        const params = getParams();
-        if (params.k) {
-          connect('champions:' + params.k);
-        }
+        const ps = new PubSub({
+          host: 'pubsub.h.kvn.pt',
+          appKey: 'champions',
+          getData: () => this.state,
+          setData: (data) => (this.state = data),
+        });
+        this.$watch('state', ps.pub);
       },
     };
   });
