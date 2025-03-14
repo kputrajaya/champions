@@ -168,7 +168,7 @@ document.addEventListener('alpine:init', () => {
       // Initialization
       init() {
         const ps = new PubSub({
-          host: 'pubsub.h.kvn.pt',
+          host: 'wss://pubsub.h.kvn.pt',
           appKey: 'champions',
           getData: () => this.state,
           setData: (data) => {
