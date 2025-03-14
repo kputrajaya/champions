@@ -75,10 +75,9 @@ document.addEventListener('alpine:init', () => {
       // Data
       state: this.$persist(deepCopy(BASE.state)),
       edited: {},
-      editedList: null,
-      editedIndex: null,
-      actionConfirmed: false,
-      actionConfirmedTimeout: null,
+      selector: () => ({}),
+      selectorIndex: null,
+      actionPrompted: false,
       lastJson: null,
 
       // Computed
@@ -87,38 +86,45 @@ document.addEventListener('alpine:init', () => {
       },
 
       // Methods
-      initHeroes(heroCount) {
-        for (let i = 0; i < heroCount; i++) {
+      initHeroes(count) {
+        for (let i = 0; i < count; i++) {
           this.state.heroes.push(deepCopy(BASE.hero));
         }
-        this.state.firstPlayer = Math.floor(Math.random() * heroCount);
+        this.state.firstPlayer = Math.floor(Math.random() * count);
       },
       addSideScheme() {
         const sideScheme = deepCopy(BASE.sideScheme);
         this.state.sideSchemes.push(sideScheme);
-        this.edit(sideScheme, this.state.sideSchemes, this.state.sideSchemes.length - 1);
+        this.edit((s) => s.sideSchemes, this.state.sideSchemes.length - 1);
       },
-      addMinion(hero) {
+      addMinion(heroIndex) {
+        const hero = this.state.heroes[heroIndex];
         const minion = deepCopy(BASE.minion);
         hero.minions.push(minion);
-        this.edit(minion, hero.minions, hero.minions.length - 1);
+        this.edit((s) => s.heroes[heroIndex].minions, hero.minions.length - 1);
       },
-      addAlly(hero) {
+      addAlly(heroIndex) {
+        const hero = this.state.heroes[heroIndex];
         const ally = deepCopy(BASE.ally);
         hero.allies.push(ally);
-        this.edit(ally, hero.allies, hero.allies.length - 1);
+        this.edit((s) => s.heroes[heroIndex].allies, hero.allies.length - 1);
       },
-      addCard(hero) {
+      addCard(heroIndex) {
+        const hero = this.state.heroes[heroIndex];
         const card = deepCopy(BASE.card);
         hero.cards.push(card);
-        this.edit(card, hero.cards, hero.cards.length - 1);
+        this.edit((s) => s.heroes[heroIndex].cards, hero.cards.length - 1);
       },
-      edit(edited, editedList, editedIndex) {
-        this.edited = edited;
-        this.editedList = editedList;
-        this.editedIndex = editedIndex;
-        this.actionConfirmed = false;
+      edit(selector, selectorIndex = null) {
+        this.selector = selector;
+        this.selectorIndex = selectorIndex;
+        this.editRebind();
+        this.actionPrompted = false;
         editModalRef.show();
+      },
+      editRebind() {
+        const selected = this.selector(this.state);
+        this.edited = this.selectorIndex !== null ? selected[this.selectorIndex] : selected;
       },
       editDecrease(prop) {
         if (!(prop in this.edited)) return;
@@ -134,16 +140,12 @@ document.addEventListener('alpine:init', () => {
         this.edited[prop] = safeValue;
       },
       editDelete() {
-        if (this.editedList === null) return;
-        if (!this.actionConfirmed) {
-          this.actionConfirmed = true;
-          clearTimeout(this.actionConfirmedTimeout);
-          this.actionConfirmedTimeout = setTimeout(() => {
-            this.actionConfirmed = false;
-          }, 2000);
+        if (this.selectorIndex === null) return;
+        if (!this.actionPrompted) {
+          this.actionPrompted = true;
           return;
         }
-        this.editedList.splice(this.editedIndex, 1);
+        this.selector(this.state).splice(this.selectorIndex, 1);
         editModalRef.hide();
       },
       cycle() {
@@ -164,7 +166,10 @@ document.addEventListener('alpine:init', () => {
           host: 'pubsub.h.kvn.pt',
           appKey: 'champions',
           getData: () => this.state,
-          setData: (data) => (this.state = data),
+          setData: (data) => {
+            this.state = data;
+            this.editRebind();
+          },
         });
         this.$watch('state', ps.pub);
       },
