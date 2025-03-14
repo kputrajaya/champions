@@ -97,6 +97,11 @@ document.addEventListener('alpine:init', () => {
         this.state.sideSchemes.push(sideScheme);
         this.edit((s) => s.sideSchemes, this.state.sideSchemes.length - 1);
       },
+      addVillain() {
+        const minion = deepCopy(BASE.minion);
+        this.state.villain.minions.push(minion);
+        this.edit((s) => s.villain.minions, this.state.villain.minions.length - 1);
+      },
       addMinion(heroIndex) {
         const hero = this.state.heroes[heroIndex];
         const minion = deepCopy(BASE.minion);
