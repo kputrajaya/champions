@@ -75,10 +75,9 @@ document.addEventListener('alpine:init', () => {
       // Data
       state: this.$persist(deepCopy(BASE.state)),
       edited: {},
-      selector: () => ({}),
+      selector: null,
       selectorIndex: null,
       actionPrompted: false,
-      lastJson: null,
 
       // Computed
       isSolo() {
@@ -92,44 +91,35 @@ document.addEventListener('alpine:init', () => {
         }
         this.state.firstPlayer = Math.floor(Math.random() * count);
       },
-      addSideScheme() {
-        const sideScheme = deepCopy(BASE.sideScheme);
-        this.state.sideSchemes.push(sideScheme);
-        this.edit((s) => s.sideSchemes, this.state.sideSchemes.length - 1);
-      },
       addVillain() {
-        const minion = deepCopy(BASE.minion);
-        this.state.villain.minions.push(minion);
+        this.state.villain.minions.push(deepCopy(BASE.minion));
         this.edit((s) => s.villain.minions, this.state.villain.minions.length - 1);
       },
+      addSideScheme() {
+        this.state.sideSchemes.push(deepCopy(BASE.sideScheme));
+        this.edit((s) => s.sideSchemes, this.state.sideSchemes.length - 1);
+      },
       addMinion(heroIndex) {
-        const hero = this.state.heroes[heroIndex];
-        const minion = deepCopy(BASE.minion);
-        hero.minions.push(minion);
-        this.edit((s) => s.heroes[heroIndex].minions, hero.minions.length - 1);
+        const list = this.state.heroes[heroIndex].minions;
+        list.push(deepCopy(BASE.minion));
+        this.edit((s) => s.heroes[heroIndex].minions, list.length - 1);
       },
       addAlly(heroIndex) {
-        const hero = this.state.heroes[heroIndex];
-        const ally = deepCopy(BASE.ally);
-        hero.allies.push(ally);
-        this.edit((s) => s.heroes[heroIndex].allies, hero.allies.length - 1);
+        const list = this.state.heroes[heroIndex].allies;
+        list.push(deepCopy(BASE.ally));
+        this.edit((s) => s.heroes[heroIndex].allies, list.length - 1);
       },
       addCard(heroIndex) {
-        const hero = this.state.heroes[heroIndex];
-        const card = deepCopy(BASE.card);
-        hero.cards.push(card);
-        this.edit((s) => s.heroes[heroIndex].cards, hero.cards.length - 1);
+        const list = this.state.heroes[heroIndex].cards;
+        list.push(deepCopy(BASE.card));
+        this.edit((s) => s.heroes[heroIndex].cards, list.length - 1);
       },
       edit(selector, selectorIndex = null) {
         this.selector = selector;
         this.selectorIndex = selectorIndex;
-        this.editRebind();
+        this.rebindEdited();
         this.actionPrompted = false;
         editModalRef.show();
-      },
-      editRebind() {
-        const selected = this.selector(this.state);
-        this.edited = this.selectorIndex !== null ? selected[this.selectorIndex] : selected;
       },
       editDecrease(prop) {
         if (!(prop in this.edited)) return;
@@ -153,6 +143,11 @@ document.addEventListener('alpine:init', () => {
         this.selector(this.state).splice(this.selectorIndex, 1);
         editModalRef.hide();
       },
+      rebindEdited() {
+        let edited = this.selector ? this.selector(this.state) : null;
+        edited = edited && this.selectorIndex !== null ? edited[this.selectorIndex] : edited;
+        this.edited = edited || {};
+      },
       cycle() {
         this.state.firstPlayer = (this.state.firstPlayer + 1) % this.state.heroes.length;
       },
@@ -160,6 +155,9 @@ document.addEventListener('alpine:init', () => {
         const response = prompt('Reset game? Type "y" to continue.') || '';
         if (response.trim().toLowerCase() !== 'y') return;
         this.state = deepCopy(BASE.state);
+        this.edited = {};
+        this.selector = null;
+        this.selectorIndex = null;
       },
       statusActive(item) {
         return item.tough || item.tough2 || item.stunned || item.stunned2 || item.confused || item.confused2;
@@ -173,7 +171,7 @@ document.addEventListener('alpine:init', () => {
           getData: () => this.state,
           setData: (data) => {
             this.state = data;
-            this.editRebind();
+            this.rebindEdited();
           },
         });
         this.$watch('state', ps.pub);
