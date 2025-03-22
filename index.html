@@ -211,7 +211,8 @@
                     <input
                       class="form-control"
                       type="text"
-                      maxlength="20"
+                      maxlength="25"
+                      placeholder="Optional"
                       x-model="edited.name"
                       @blur="edited.name = edited.name.trim()"
                     />
@@ -249,7 +250,7 @@
                         <input class="form-check-input mx-2" type="checkbox" id="checkboxT" x-model="edited.tough" />
                         <label class="form-check-label ps-0" for="checkboxT">
                           Tough
-                          <span class="badge fs-8 fw-normal text-muted">prevent damage</span>
+                          <span class="badge fs-8 fw-normal text-secondary">Prevent damage</span>
                         </label>
                       </div>
                       <div class="form-check">
@@ -257,7 +258,7 @@
                         <input class="form-check-input mx-2" type="checkbox" id="checkboxS" x-model="edited.stunned" />
                         <label class="form-check-label ps-0" for="checkboxS">
                           Stunned
-                          <span class="badge fs-8 fw-normal text-muted">cancel ATK</span>
+                          <span class="badge fs-8 fw-normal text-secondary">Cancel ATK</span>
                         </label>
                       </div>
                       <div class="form-check">
@@ -265,7 +266,7 @@
                         <input class="form-check-input mx-2" type="checkbox" id="checkboxC" x-model="edited.confused" />
                         <label class="form-check-label ps-0" for="checkboxC">
                           Confused
-                          <span class="badge fs-8 fw-normal text-muted">cancel SCH / THW</span>
+                          <span class="badge fs-8 fw-normal text-secondary">Cancel SCH / THW</span>
                         </label>
                       </div>
                     </div>
