@@ -1,9 +1,11 @@
 const BASE = {
   sideScheme: {
+    name: '',
     threat: 3,
     counter: 0,
   },
   minion: {
+    name: '',
     health: 3,
     tough: false,
     tough2: false,
@@ -14,6 +16,7 @@ const BASE = {
     counter: 0,
   },
   ally: {
+    name: '',
     health: 3,
     tough: false,
     tough2: false,
@@ -24,9 +27,11 @@ const BASE = {
     counter: 0,
   },
   card: {
+    name: '',
     counter: 3,
   },
   hero: {
+    name: '',
     health: 10,
     tough: false,
     tough2: false,
@@ -41,6 +46,7 @@ const BASE = {
   },
   state: {
     villain: {
+      name: '',
       health: 30,
       tough: false,
       tough2: false,
@@ -52,6 +58,7 @@ const BASE = {
       counter: 0,
     },
     mainScheme: {
+      name: '',
       threat: 0,
       acceleration: 0,
       counter: 0,

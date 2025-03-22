@@ -48,6 +48,11 @@
               <ul class="list-group list-group-flush">
                 <li class="list-group-item text-bg-danger fs-7" @click="addVillain()">Villains &plus;</li>
                 <li class="list-group-item text-bg-danger bg-opacity-75" @click="edit((s) => s.villain)">
+                  <div
+                    class="mb-1 fs-8 fw-bold text-uppercase"
+                    x-show="state.villain.name"
+                    x-text="state.villain.name"
+                  ></div>
                   <span class="badge fs-6">&#10084;&#65039; <span x-text="state.villain.health"></span></span>
                   <span class="badge fs-7" x-show="state.villain.counter"
                     >&#9201;&#65039; <span x-text="state.villain.counter"></span
@@ -63,6 +68,7 @@
                     class="list-group-item text-bg-danger bg-opacity-75"
                     @click="edit((s) => s.villain.minions, minionIndex)"
                   >
+                    <div class="mb-1 fs-8 fw-bold text-uppercase" x-show="minion.name" x-text="minion.name"></div>
                     <span class="badge fs-7">&#10084;&#65039; <span x-text="minion.health"></span></span>
                     <span class="badge fs-7" x-show="minion.counter"
                       >&#9201;&#65039; <span x-text="minion.counter"></span
@@ -76,6 +82,11 @@
                 </template>
                 <li class="list-group-item text-bg-warning fs-7" @click="addSideScheme()">Schemes &plus;</li>
                 <li class="list-group-item text-bg-warning bg-opacity-50" @click="edit((s) => s.mainScheme)">
+                  <div
+                    class="mb-1 fs-8 fw-bold text-uppercase"
+                    x-show="state.mainScheme.name"
+                    x-text="state.mainScheme.name"
+                  ></div>
                   <span class="badge fs-6">&#9888;&#65039; <span x-text="state.mainScheme.threat"></span></span>
                   <span class="badge fs-7" x-show="state.mainScheme.acceleration">
                     &#9195; <span x-text="state.mainScheme.acceleration"></span>
@@ -89,6 +100,7 @@
                     class="list-group-item text-bg-warning bg-opacity-50"
                     @click="edit((s) => s.sideSchemes, schemeIndex)"
                   >
+                    <div class="mb-1 fs-8 fw-bold text-uppercase" x-show="scheme.name" x-text="scheme.name"></div>
                     <span class="badge fs-7">&#9888;&#65039; <span x-text="scheme.threat"></span></span>
                     <span class="badge fs-7" x-show="scheme.counter">
                       &#9201;&#65039; <span x-text="scheme.counter"></span>
@@ -105,6 +117,7 @@
               <div class="card mb-1">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item text-bg-secondary" @click="edit((s) => s.heroes[heroIndex])">
+                    <div class="mb-1 fs-8 fw-bold text-uppercase" x-show="hero.name" x-text="hero.name"></div>
                     <span
                       class="badge fs-6"
                       :class="!isSolo() && heroIndex === state.firstPlayer ? 'first-player' : ''"
@@ -126,6 +139,7 @@
                       class="list-group-item text-bg-danger bg-opacity-75"
                       @click="edit((s) => s.heroes[heroIndex].minions, minionIndex)"
                     >
+                      <div class="mb-1 fs-8 fw-bold text-uppercase" x-show="minion.name" x-text="minion.name"></div>
                       <span class="badge fs-7">&#10084;&#65039; <span x-text="minion.health"></span></span>
                       <span class="badge fs-7" x-show="minion.counter">
                         &#9201;&#65039; <span x-text="minion.counter"></span>
@@ -143,6 +157,7 @@
                       class="list-group-item text-bg-info bg-opacity-50"
                       @click="edit((s) => s.heroes[heroIndex].allies, allyIndex)"
                     >
+                      <div class="mb-1 fs-8 fw-bold text-uppercase" x-show="ally.name" x-text="ally.name"></div>
                       <span class="badge fs-7">&#10084;&#65039; <span x-text="ally.health"></span></span>
                       <span class="badge fs-7" x-show="ally.counter">
                         &#9201;&#65039; <span x-text="ally.counter"></span>
@@ -160,6 +175,7 @@
                       class="list-group-item text-bg-secondary bg-opacity-75"
                       @click="edit((s) => s.heroes[heroIndex].cards, cardIndex)"
                     >
+                      <div class="mb-1 fs-8 fw-bold text-uppercase" x-show="card.name" x-text="card.name"></div>
                       <span class="badge fs-7">&#9201;&#65039; <span x-text="card.counter"></span></span>
                     </li>
                   </template>
@@ -189,6 +205,12 @@
                 <h6 class="modal-title">Edit Item</h6>
               </div>
               <div class="modal-body pb-0">
+                <div class="row mb-3 align-items-center">
+                  <legend class="col-sm-3 col-form-label pt-0">Name</legend>
+                  <div class="col-sm-9">
+                    <input class="form-control" type="text" maxlength="20" x-model="edited.name" />
+                  </div>
+                </div>
                 <template x-for="prop in ['health', 'threat', 'acceleration', 'counter']">
                   <template x-if="prop in edited">
                     <div class="row mb-3 align-items-center">
