@@ -84,7 +84,7 @@
                     </span>
                   </li>
                 </template>
-                <li class="list-group-item bg-warning fs-7" @click="addSideScheme()">Schemes &plus;</li>
+                <li class="list-group-item bg-warning bg-opacity-75 fs-7" @click="addSideScheme()">Schemes &plus;</li>
                 <li class="list-group-item bg-warning bg-opacity-50" @click="edit((s) => s.mainScheme)">
                   <div
                     class="mb-1 fs-8 fw-bold text-uppercase"
@@ -154,7 +154,7 @@
                       </span>
                     </li>
                   </template>
-                  <li class="list-group-item bg-info fs-7" @click="addAlly(heroIndex)">Allies &plus;</li>
+                  <li class="list-group-item bg-info bg-opacity-75 fs-7" @click="addAlly(heroIndex)">Allies &plus;</li>
                   <template x-for="(ally, allyIndex) in hero.allies">
                     <li
                       class="list-group-item bg-info bg-opacity-50"
